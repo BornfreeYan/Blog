@@ -7,6 +7,7 @@ import '../styles/global.css';
 const {
   title = "Yan's Blog",
   description = 'Notes, projects, and technical retrospectives.',
+  wide = false,
 } = Astro.props;
 
 const pageTitle = title === "Yan's Blog" ? title : `${title} — Yan's Blog`;
@@ -27,7 +28,7 @@ const rssHref = url('rss.xml');
     <link rel="alternate" type="application/rss+xml" title="Yan's Blog" href={rssHref} />
   </head>
   <body>
-    <div class="frame">
+    <div class:list={['frame', wide && 'frame--wide']}>
       <Header />
       <main class="site-main">
         <slot />

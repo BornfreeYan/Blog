@@ -55,14 +55,17 @@
   --tracking: 0.5px;
 
   /* ---- layout ----
-     One frame width for every page, so the dashed rails never move when you
-     navigate. The article page fits its TOC rail inside the same frame:
-     sidebar (200) + gap (32) + prose (624) = the 856px content box. */
-  --w-frame: 920px;
-  --w-prose: 624px;
-  --w-sidebar: 200px;
+     A narrow reading column, cali.so scale. Home / Article / Project / About
+     all share `--w-frame`, so the dashed rails sit in the same place on every
+     page. The article detail page opts into `--w-frame-wide` because its TOC
+     needs its own rail beside the prose — and the numbers there add up exactly:
+     gutter 24×2 + sidebar 160 + gap 32 + prose 640 = 880. */
+  --w-frame: 680px;
+  --w-frame-wide: 880px;
+  --w-prose: 640px;
+  --w-sidebar: 160px;
   --gap-sidebar: 32px;
-  --gutter: 32px;
+  --gutter: 24px;
 
   /* ---- spacing scale (multiples of 4) ---- */
   --sp-1: 4px;

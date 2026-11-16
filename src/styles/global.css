@@ -98,7 +98,7 @@ button {
 }
 
 /* ==========================================================================
-   Frame — one column, edged with dashed rails, shared by every page
+   Frame — one narrow column, edged with dashed rails, shared by every page
    ========================================================================== */
 
 .frame {
@@ -112,6 +112,11 @@ button {
   flex-direction: column;
   flex: 1 0 auto;
   min-width: 0;
+}
+
+/* article detail only: the TOC rail needs room the narrow frame can't give */
+.frame--wide {
+  max-width: var(--w-frame-wide);
 }
 
 /* pushes the footer to the bottom on short pages */
