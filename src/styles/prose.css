@@ -63,11 +63,11 @@
   font-weight: 700;
 }
 
+/* Italic has no honest equivalent in a monospace face, so it reads as
+   emphasis-by-quieting: slightly dimmer, no decoration. */
 .prose em {
   font-style: normal;
-  color: var(--text-hi);
-  border-bottom: 1px dotted var(--text-dim);
-  padding-bottom: 1px;
+  color: var(--text-muted);
 }
 
 .prose del {
@@ -89,7 +89,7 @@
 /* ---- lists ---- */
 .prose ul,
 .prose ol {
-  padding-left: 1.5em;
+  padding-left: 1.35em;
 }
 
 .prose li + li {
@@ -97,7 +97,8 @@
 }
 
 .prose li::marker {
-  color: var(--text-dim);
+  color: var(--text-faint);
+  font-size: 0.85em;
 }
 
 .prose li > ul,
@@ -271,6 +272,16 @@
   margin: var(--sp-6) auto;
 }
 
+/* Shields.io badges are content, not screenshots: no border, no centring,
+   and they sit inline in a row inside table cells. */
+.prose table img {
+  display: inline-block;
+  margin: 0 4px 4px 0;
+  border: none;
+  border-radius: 0;
+  vertical-align: middle;
+}
+
 .prose figure {
   margin: var(--sp-6) 0;
 }
@@ -309,6 +320,43 @@
 
 /* ---- standalone (About page renders the same markdown pipeline) ---- */
 .prose--page {
-  max-width: var(--w-prose);
   padding-bottom: var(--sp-20);
+}
+
+/* the tech-stack table is a layout device, not a data table: no grid, and the
+   label column stays out of the way */
+.prose--page table {
+  border-collapse: collapse;
+  display: table;
+  width: 100%;
+}
+
+.prose--page td:first-child {
+  width: 1px;
+  white-space: nowrap;
+  padding-right: var(--sp-5);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.prose--page th,
+.prose--page td {
+  border: none;
+  border-bottom: 1px solid var(--border-soft);
+  padding: var(--sp-3) 0;
+  vertical-align: middle;
+}
+
+.prose--page th {
+  background: none;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  text-align: left;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.prose--page tbody tr:hover {
+  background: none;
 }

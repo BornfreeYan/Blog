@@ -1,22 +1,18 @@
 /**
- * Site-wide content that isn't a collection: the bio block and social links.
- * Edit this file to change the Home page intro without touching markup.
+ * Site-wide content that isn't a collection: the bio block, social links and
+ * the email address used by the one-click copy button.
  */
 export const site = {
-  name: 'Yan',
-  handle: 'BornfreeYan',
-  bio: [
-    'Hi, 这里是 <strong>Yan</strong>，技术 ID 为 <strong>BornfreeYan</strong>。欢迎访问我的 Blog，这里记录了我的学习笔记、技术实践和项目复盘，也会偶尔写一些生活观察。',
-    '希望我的 Blog 可以为你带来价值！',
-  ],
+  name: 'BornfreeYan',
+  bio: 'Hi~ I\'m <strong>BornfreeYan</strong>. 这是我的 Blog，会在这里记录自己的技术学习、实践，以及自己的生活感悟自我思考。',
+  email: '1700807190@qq.com',
   links: [
-    { label: 'Homepage', href: '#' },
+    { label: 'Blog', href: 'https://bornfreeyan.github.io/Blog/' },
     { label: 'GitHub', href: 'https://github.com/BornfreeYan' },
-    { label: 'Bilibili', href: '#' },
-    { label: 'Redbook', href: '#' },
-    { label: 'Instagram', href: '#' },
-    { label: 'Email', href: 'mailto:' },
+    { label: 'Redbook', href: 'https://www.xiaohongshu.com/user/profile/65884126000000003d036587' },
+    { label: 'X', href: 'https://x.com/yanbornfree' },
+    { label: 'Zhihu', href: 'https://www.zhihu.com/people/nsitoc' },
   ],
   homeArticleCount: 5,
-  projectArticleCount: 5,
+  homeProjectCount: 5,
 };

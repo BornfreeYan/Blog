@@ -7,7 +7,12 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="site-footer__left">
     <div class="site-footer__copyright">@{year} BornfreeYan</div>
-    <div>All rights reserved.</div>
+    <div>
+      All rights reserved.
+      <span class="site-footer__powered">
+        · powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>
+      </span>
+    </div>
   </div>
   <div class="site-footer__right">
     <a href={url('rss.xml')}>RSS</a>

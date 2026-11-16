@@ -131,7 +131,6 @@ const meta = [
     top: var(--sp-10);
     align-self: flex-start;
   }
-
   .progress-wrap {
     display: flex;
     align-items: center;
@@ -187,30 +186,28 @@ const meta = [
 
   .toc__item {
     position: relative;
-    padding-left: var(--sp-5);
+    padding-left: var(--sp-4);
     margin-bottom: var(--sp-3);
     font-size: var(--fs-sm);
-    line-height: 1.5;
-  }
-
-  /* signature: the short horizontal tick off the rule */
+    line-height: 1.45;
+  }  /* signature: the short horizontal tick off the rule */
   .toc__item::before {
     content: '';
     position: absolute;
     left: 0;
     top: 50%;
-    width: 12px;
+    width: 10px;
     height: 1px;
     background-color: var(--border);
     transition: background-color var(--transition), width var(--transition);
   }
 
   .toc__item--h3 {
-    padding-left: var(--sp-8);
+    padding-left: var(--sp-6);
   }
 
   .toc__item--h3::before {
-    width: 24px;
+    width: 18px;
   }
 
   .toc__link {
@@ -237,9 +234,7 @@ const meta = [
     flex: 1 1 auto;
     min-width: 0;
     max-width: var(--w-prose);
-  }
-
-  .post-title {
+  }  .post-title {
     font-size: var(--fs-2xl);
     font-weight: 700;
     color: var(--text-hi);
@@ -295,11 +290,10 @@ const meta = [
     flex-wrap: wrap;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 860px) {
     .post-layout {
       flex-direction: column;
     }
-
     .post-sidebar {
       width: 100%;
       position: static;

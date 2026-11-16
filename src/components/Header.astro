@@ -2,11 +2,21 @@
 import { url, isActive } from '../lib/url.js';
 
 const pathname = Astro.url.pathname;
+
+/* Lucide-style line icons: 16px grid, stroke 1.5, no fill. Inlined so there is
+   no icon-font request and no runtime dependency. */
+const icons = {
+  home: '<path d="M2.5 6.5 8 2l5.5 4.5V13a1 1 0 0 1-1 1H10v-4H6v4H3.5a1 1 0 0 1-1-1Z"/>',
+  file: '<path d="M9 1.5H4.5a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V5L9 1.5Z"/><path d="M9 1.5V5h3.5"/><path d="M5.5 8.5h5M5.5 11h3.5"/>',
+  folder: '<path d="M1.5 4.5a1 1 0 0 1 1-1h3L7 5h4.5a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1Z"/>',
+  user: '<circle cx="8" cy="5.5" r="2.5"/><path d="M3 13.5a5 5 0 0 1 10 0"/>',
+};
+
 const links = [
-  { href: url(''), label: 'Home', key: '' },
-  { href: url('article/'), label: 'Article', key: 'article' },
-  { href: url('project/'), label: 'Project', key: 'project' },
-  { href: url('about/'), label: 'About', key: 'about' },
+  { href: url(''), label: 'Home', key: '', icon: 'home' },
+  { href: url('article/'), label: 'Article', key: 'article', icon: 'file' },
+  { href: url('project/'), label: 'Project', key: 'project', icon: 'folder' },
+  { href: url('about/'), label: 'About', key: 'about', icon: 'user' },
 ];
 ---
 
@@ -21,7 +31,13 @@ const links = [
             href={link.href}
             aria-current={isActive(pathname, link.key) ? 'page' : undefined}
           >
-            {link.label}
+            <svg
+              class="nav__icon"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              set:html={icons[link.icon]}
+            />
+            <span>{link.label}</span>
           </a>
         ))
       }

@@ -54,12 +54,15 @@
   --lh-code: 1.6;
   --tracking: 0.5px;
 
-  /* ---- layout ---- */
-  --w-container: 1100px;
-  --w-prose: 720px;
-  --w-sidebar: 220px;
-  --gutter: 20px;
-  --gap-sidebar: 48px;
+  /* ---- layout ----
+     One frame width for every page, so the dashed rails never move when you
+     navigate. The article page fits its TOC rail inside the same frame:
+     sidebar (200) + gap (32) + prose (624) = the 856px content box. */
+  --w-frame: 920px;
+  --w-prose: 624px;
+  --w-sidebar: 200px;
+  --gap-sidebar: 32px;
+  --gutter: 32px;
 
   /* ---- spacing scale (multiples of 4) ---- */
   --sp-1: 4px;

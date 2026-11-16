@@ -1,7 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
-import { url } from '../../lib/url.js';
 import projects from '../../data/projects.json';
 ---
 
@@ -39,7 +38,6 @@ import projects from '../../data/projects.json';
           <div class="project__stats">
             <span class="project__stat" data-stat="stars" hidden>
               <span class="project__stat-value"></span>
-              <span class="project__stat-label">star</span>
             </span>
             <span class="project__stat" data-stat="language" hidden>
               <span class="project__stat-value"></span>
@@ -65,7 +63,7 @@ import projects from '../../data/projects.json';
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    gap: var(--sp-8);
+    gap: var(--sp-6);
     padding: var(--sp-5) 0;
     border-bottom: 1px solid var(--border-soft);
     transition: border-color var(--transition);
@@ -103,7 +101,7 @@ import projects from '../../data/projects.json';
     color: var(--text-muted);
     line-height: 1.7;
     margin: 0 0 var(--sp-3) 0;
-    max-width: 60ch;
+    max-width: 58ch;
   }
 
   .project__tags {
@@ -123,7 +121,7 @@ import projects from '../../data/projects.json';
 
   .project__stat {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 5px;
     white-space: nowrap;
   }
@@ -135,15 +133,11 @@ import projects from '../../data/projects.json';
   .project__stat svg {
     width: 12px;
     height: 12px;
-    align-self: center;
+    flex-shrink: 0;
     fill: currentColor;
   }
 
-  .project__stat-label {
-    font-size: var(--fs-xs);
-  }
-
-  @media (max-width: 700px) {
+  @media (max-width: 760px) {
     .project {
       flex-direction: column;
       gap: var(--sp-2);

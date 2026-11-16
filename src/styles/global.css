@@ -98,26 +98,27 @@ button {
 }
 
 /* ==========================================================================
-   Layout shell
+   Frame — one column, edged with dashed rails, shared by every page
    ========================================================================== */
 
-.container {
+.frame {
   width: 100%;
-  max-width: var(--w-container);
+  max-width: var(--w-frame);
   margin: 0 auto;
   padding: 0 var(--gutter);
+  border-left: 1px dashed var(--border);
+  border-right: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+  min-width: 0;
 }
 
 /* pushes the footer to the bottom on short pages */
 .site-main {
   flex: 1 0 auto;
   width: 100%;
-}
-
-.stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  min-width: 0;
 }
 
 /* ==========================================================================
@@ -125,18 +126,15 @@ button {
    ========================================================================== */
 
 .site-header {
-  width: 100%;
-  max-width: var(--w-container);
-  margin: 0 auto;
-  padding: var(--sp-10) var(--gutter) 0;
+  padding-top: var(--sp-10);
+  padding-bottom: var(--sp-8);
 }
 
 .site-header__inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: var(--sp-5);
-  /* the rule is deliberately absent: the nav underline is the only line up here */
+  gap: var(--sp-6);
 }
 
 .logo {
@@ -144,21 +142,36 @@ button {
   font-weight: 700;
   color: var(--text-hi);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: var(--sp-8);
+  gap: var(--sp-6);
   font-size: var(--fs-sm);
 }
 
 .nav__link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
   color: var(--text-muted);
   padding-bottom: var(--sp-1);
   border-bottom: 2px solid transparent;
   transition: color var(--transition), border-color var(--transition);
   white-space: nowrap;
+}
+
+.nav__icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .nav__link:hover {
@@ -171,11 +184,11 @@ button {
 }
 
 /* ==========================================================================
-   Page header — label + big title + description (Article / Project / About)
+   Page header — label + big title + description
    ========================================================================== */
 
 .page-header {
-  margin-bottom: var(--sp-15);
+  margin-bottom: var(--sp-12);
 }
 
 .page-label {
@@ -191,7 +204,7 @@ button {
   font-weight: 700;
   color: var(--text-hi);
   line-height: var(--lh-tight);
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   margin: 0 0 var(--sp-4) 0;
 }
 
@@ -205,7 +218,7 @@ button {
   font-size: var(--fs-base);
   color: var(--text-muted);
   margin: 0;
-  max-width: 60ch;
+  max-width: 58ch;
 }
 
 /* ==========================================================================
@@ -213,7 +226,7 @@ button {
    ========================================================================== */
 
 .section {
-  margin-bottom: var(--sp-15);
+  margin-bottom: var(--sp-12);
 }
 
 .section-header {
@@ -337,10 +350,10 @@ button {
 }
 
 .timeline-row__date {
-  width: 120px;
+  width: 110px;
   flex-shrink: 0;
   text-align: right;
-  padding-right: var(--sp-6);
+  padding-right: var(--sp-5);
   padding-top: 3px;
   font-size: var(--fs-sm);
   color: var(--text-dim);
@@ -350,7 +363,7 @@ button {
 .timeline-row__track {
   width: 2px;
   flex-shrink: 0;
-  margin-right: var(--sp-6);
+  margin-right: var(--sp-5);
   background-color: var(--border);
   position: relative;
 }
@@ -449,8 +462,7 @@ button {
    ========================================================================== */
 
 .bio {
-  max-width: 900px;
-  margin-bottom: var(--sp-20);
+  margin-bottom: var(--sp-15);
 }
 
 .bio__text {
@@ -472,23 +484,49 @@ button {
   font-weight: 700;
 }
 
+/* inline row, separated by middots rather than underlines */
 .social-links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--sp-5);
+  align-items: center;
+  gap: 0 var(--sp-3);
   font-size: var(--fs-sm);
+  line-height: 2;
 }
 
 .social-link {
   color: var(--text-muted);
-  border-bottom: 1px dotted var(--text-faint);
-  padding-bottom: 2px;
-  transition: color var(--transition), border-color var(--transition);
+  transition: color var(--transition);
 }
 
 .social-link:hover {
   color: var(--accent-soft);
-  border-bottom-color: var(--accent-soft);
+}
+
+/* the separator is a sibling so it never sits at either end */
+.social-sep {
+  color: var(--text-faint);
+  user-select: none;
+}
+
+/* Email is a copy button, not a link */
+.copy-email {
+  color: var(--text-muted);
+  padding: 0;
+  transition: color var(--transition);
+}
+
+.copy-email:hover {
+  color: var(--accent-soft);
+}
+
+.copy-email[data-copied='true'] {
+  color: var(--accent-soft);
+}
+
+.copy-email__done {
+  margin-left: 4px;
+  color: var(--accent);
 }
 
 /* ==========================================================================
@@ -498,9 +536,7 @@ button {
 .site-footer {
   flex-shrink: 0;
   width: 100%;
-  max-width: var(--w-container);
-  margin: 0 auto;
-  padding: var(--sp-6) var(--gutter) var(--sp-12);
+  padding: var(--sp-6) 0 var(--sp-12);
   border-top: 1px solid var(--border-soft);
   display: flex;
   justify-content: space-between;
@@ -520,7 +556,10 @@ button {
 
 .site-footer__right {
   display: flex;
-  gap: var(--sp-5);
+  align-items: center;
+  gap: var(--sp-4);
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .site-footer__right a {
@@ -529,6 +568,19 @@ button {
 }
 
 .site-footer__right a:hover {
+  color: var(--accent-soft);
+}
+
+.site-footer__powered {
+  color: var(--text-faint);
+}
+
+.site-footer__powered a {
+  color: var(--text-dim);
+  transition: color var(--transition);
+}
+
+.site-footer__powered a:hover {
   color: var(--accent-soft);
 }
 
@@ -546,7 +598,7 @@ button {
    Small screens
    ========================================================================== */
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   .site-header__inner {
     flex-direction: column;
     align-items: flex-start;
@@ -589,5 +641,17 @@ button {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--sp-3);
+  }
+
+  .site-footer__right {
+    justify-content: flex-start;
+  }
+}
+
+/* below this the dashed rails crowd the gutter — drop them */
+@media (max-width: 640px) {
+  .frame {
+    border-left: none;
+    border-right: none;
   }
 }

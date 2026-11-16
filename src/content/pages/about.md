@@ -1,25 +1,17 @@
----
+## About
 
-## About me
+- 🚀 80% focus on passing civil service exam, 20% on full-stack/agent development, using AI to boost efficiency and initiative to create the impossible.
+- 🌅 Interested in Edge AI / Personal agent / Decentralization / Model deployment / Investment / English.
+- 🎯 Long-term goal: Financial Independence & Self-Growth & Inner Peace.
+- ⌨️ Out of code: I will get back to 🏀 | 🎹 | 🚅… — the passions that once sustained my life.
 
-Hi, 这里是 **Yan**，技术 ID 为 **BornfreeYan**。
+## Tech stack
 
-我在做一个很长的转型：从传统的技术栈，往全栈开发、Agent 开发、深度学习与边缘工程这几个方向同时推进。这个博客是这条路上的公开记录——学习笔记、技术实践、项目复盘，偶尔也写点生活观察。
+| Layer | Stack |
+| --- | --- |
+| **Backend** | <img src="https://img.shields.io/badge/Python-d2994a?style=for-the-badge&logo=python&logoColor=121212" alt="Python" /> <img src="https://img.shields.io/badge/FastAPI-d2994a?style=for-the-badge&logo=fastapi&logoColor=121212" alt="FastAPI" /> <img src="https://img.shields.io/badge/MySQL-d2994a?style=for-the-badge&logo=mysql&logoColor=121212" alt="MySQL" /> <img src="https://img.shields.io/badge/Redis-2b2b2b?style=for-the-badge&logo=redis&logoColor=6b6b6b" alt="Redis" /> <img src="https://img.shields.io/badge/RabbitMQ-2b2b2b?style=for-the-badge&logo=rabbitmq&logoColor=6b6b6b" alt="RabbitMQ" /> <img src="https://img.shields.io/badge/Go-2b2b2b?style=for-the-badge&logo=go&logoColor=6b6b6b" alt="Go" /> <img src="https://img.shields.io/badge/Gin-2b2b2b?style=for-the-badge&logo=gin&logoColor=6b6b6b" alt="Gin" /> |
+| **Frontend** | <img src="https://img.shields.io/badge/TypeScript-2b2b2b?style=for-the-badge&logo=typescript&logoColor=6b6b6b" alt="TypeScript" /> <img src="https://img.shields.io/badge/JavaScript-d2994a?style=for-the-badge&logo=javascript&logoColor=121212" alt="JavaScript" /> <img src="https://img.shields.io/badge/React-2b2b2b?style=for-the-badge&logo=react&logoColor=6b6b6b" alt="React" /> <img src="https://img.shields.io/badge/HTML-d2994a?style=for-the-badge&logo=html5&logoColor=121212" alt="HTML" /> <img src="https://img.shields.io/badge/CSS-d2994a?style=for-the-badge&logo=css&logoColor=121212" alt="CSS" /> |
+| **DevOps & Tools** | <img src="https://img.shields.io/badge/Git-d2994a?style=for-the-badge&logo=git&logoColor=121212" alt="Git" /> <img src="https://img.shields.io/badge/Docker-2b2b2b?style=for-the-badge&logo=docker&logoColor=6b6b6b" alt="Docker" /> <img src="https://img.shields.io/badge/Nginx-2b2b2b?style=for-the-badge&logo=nginx&logoColor=6b6b6b" alt="Nginx" /> |
+| **Workflow** | <img src="https://img.shields.io/badge/Claude_Code-d2994a?style=for-the-badge&logo=claude&logoColor=121212" alt="Claude Code" /> |
 
-写下来的东西才算真的想清楚了，所以这里更多是**给我自己**看的：把踩过的坑、读懂的论文、跑通的代码留成可检索的文本。
-
-## What I write about
-
-- **Fullstack** — 前端、后端、Kubernetes、部署
-- **Agent** — Agent Loop、工具调用、Coding Agent 的工程实践
-- **Deep Learning** — 论文笔记与最小可跑实验
-- **Life** — 学习方法的复盘，以及偶尔的自我怀疑
-
-## Elsewhere
-
-- GitHub — [BornfreeYan](https://github.com/BornfreeYan)
-- 这个博客的源码 — [BornfreeYan/Blog](https://github.com/BornfreeYan/Blog)
-
-## Colophon
-
-用 [Astro](https://astro.build) 构建，手写 CSS，几乎没有 JavaScript。设计语言是终端式的：等宽字体、单色灰阶、一点琥珀色作为唯一强调色。内容以 Markdown 撰写。
+I'll light them up step by step.

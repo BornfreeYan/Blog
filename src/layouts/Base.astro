@@ -27,12 +27,12 @@ const rssHref = url('rss.xml');
     <link rel="alternate" type="application/rss+xml" title="Yan's Blog" href={rssHref} />
   </head>
   <body>
-    <Header />
-    <main class="site-main">
-      <div class="container">
+    <div class="frame">
+      <Header />
+      <main class="site-main">
         <slot />
-      </div>
-    </main>
-    <Footer />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>

@@ -1,23 +1,15 @@
 [
   {
-    "name": "Yan's Blog",
-    "desc": "基于 Astro 的终端风格个人博客，本仓库。",
-    "href": "https://github.com/BornfreeYan/Blog",
-    "repo": "BornfreeYan/Blog",
-    "tags": ["Astro", "CSS", "JavaScript"]
+    "name": "Webdesk",
+    "desc": "A personal web desktop bookmark manager — macOS-style desktop, Dock, folders and widgets.",
+    "href": "https://github.com/BornfreeYan/WebDesk",
+    "repo": "BornfreeYan/WebDesk",
+    "tags": ["TypeScript", "React", "Startpage"]
   },
   {
-    "name": "KnowledgeBase",
-    "desc": "个人知识库：全栈 / Agent / 深度学习 / 考公。",
-    "href": "https://github.com/BornfreeYan",
-    "repo": "BornfreeYan/KnowledgeBase",
-    "tags": ["Markdown", "Notes"]
-  },
-  {
-    "name": "BornfreeYan",
-    "desc": "GitHub Profile README。",
-    "href": "https://github.com/BornfreeYan/BornfreeYan",
-    "repo": "BornfreeYan/BornfreeYan",
-    "tags": ["Profile"]
+    "name": "My resume",
+    "desc": "我的简历",
+    "href": "https://bornfreeyan.github.io/my-Resume/",
+    "tags": ["HTML", "CSS", "JavaScript"]
   }
 ]
