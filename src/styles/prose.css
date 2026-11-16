@@ -1,0 +1,314 @@
+/* ==========================================================================
+   Prose — everything inside a rendered markdown article.
+   Keep this file scoped to .prose so it never leaks into UI chrome.
+   ========================================================================== */
+
+.prose {
+  font-size: var(--fs-base);
+  line-height: var(--lh-prose);
+  color: var(--text);
+  min-width: 0;
+  /* long URLs and hashes must not blow out the column */
+  overflow-wrap: break-word;
+}
+
+/* ---- rhythm ----
+   Zero every UA margin first, then re-add space only *between* siblings.
+   Anything declaring its own margin must out-specify `.prose > * + *`. */
+.prose > * {
+  margin-block: 0;
+}
+
+.prose > * + * {
+  margin-block-start: var(--sp-6);
+}
+
+.prose h2,
+.prose h3,
+.prose h4 {
+  color: var(--text-hi);
+  line-height: var(--lh-tight);
+  letter-spacing: 0;
+  scroll-margin-top: var(--sp-10);
+}
+
+.prose h2 {
+  font-size: var(--fs-xl);
+  margin-block-start: var(--sp-15);
+  margin-block-end: var(--sp-4);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.prose h3 {
+  font-size: var(--fs-lg);
+  margin-block-start: var(--sp-10);
+  margin-block-end: var(--sp-3);
+}
+
+.prose h4 {
+  font-size: var(--fs-md);
+  margin-block-start: var(--sp-8);
+  margin-block-end: var(--sp-3);
+}
+
+/* the very first element should not push the article down */
+.prose > :first-child {
+  margin-block-start: 0;
+}
+
+/* ---- emphasis: color and weight, never italic (monospace italics are ugly) ---- */
+.prose strong {
+  color: var(--text-hi);
+  font-weight: 700;
+}
+
+.prose em {
+  font-style: normal;
+  color: var(--text-hi);
+  border-bottom: 1px dotted var(--text-dim);
+  padding-bottom: 1px;
+}
+
+.prose del {
+  color: var(--text-dim);
+}
+
+/* ---- links ---- */
+.prose a {
+  color: var(--accent-soft);
+  border-bottom: 1px dotted var(--accent-deep);
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.prose a:hover {
+  border-bottom-style: solid;
+  border-bottom-color: var(--accent-soft);
+}
+
+/* ---- lists ---- */
+.prose ul,
+.prose ol {
+  padding-left: 1.5em;
+}
+
+.prose li + li {
+  margin-block-start: var(--sp-2);
+}
+
+.prose li::marker {
+  color: var(--text-dim);
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-block-start: var(--sp-2);
+}
+
+/* ---- inline code ---- */
+.prose :not(pre) > code {
+  font-family: var(--font-stack);
+  font-size: 0.9em;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background-color: var(--bg-elev-2);
+  border: 1px solid var(--border-soft);
+  color: var(--accent-soft);
+  overflow-wrap: anywhere;
+}
+
+/* ---- code blocks ---- */
+/* Shiki writes an inline background on <pre>; override it so blocks sit on
+   the same surface family as the rest of the page instead of a foreign slab.
+   The copy button is absolutely positioned, so it would scroll away with the
+   code on overflow — the wrapper keeps it pinned. */
+.code-block {
+  position: relative;
+}
+
+.prose pre,
+.prose pre.astro-code {
+  background-color: var(--bg-elev) !important;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: var(--sp-5) var(--sp-4) var(--sp-4);
+  overflow-x: auto;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-code);
+  letter-spacing: 0;
+  tab-size: 2;
+}
+
+.prose pre code {
+  font-family: var(--font-stack);
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* language label, injected by the copy-button script */
+.code-lang {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: opacity var(--transition);
+}
+
+.code-copy {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.5px;
+  padding: 5px 8px;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background-color: var(--bg-control);
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity var(--transition), color var(--transition),
+    border-color var(--transition);
+  z-index: 2;
+}
+
+/* touch devices have no hover state to reveal the button */
+@media (hover: none) {
+  .code-copy {
+    opacity: 1;
+  }
+  .code-lang {
+    display: none;
+  }
+}
+
+.code-block:hover .code-copy,
+.code-copy:focus-visible {
+  opacity: 1;
+}
+
+.code-copy:hover {
+  color: var(--text-hi);
+  border-color: var(--text-faint);
+}
+
+.code-copy[data-copied='true'] {
+  color: var(--accent-soft);
+  border-color: var(--accent-deep);
+  opacity: 1;
+}
+
+/* keep the language label out of the copy button's way */
+.code-block:hover .code-lang {
+  opacity: 0;
+}
+
+/* ---- blockquote ---- */
+.prose blockquote {
+  margin: 0;
+  padding: 0 0 0 var(--sp-5);
+  border-left: 2px solid var(--accent-deep);
+  color: var(--text-muted);
+}
+
+.prose blockquote > * + * {
+  margin-top: var(--sp-3);
+}
+
+.prose blockquote p {
+  margin: 0;
+}
+
+/* ---- tables ---- */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+  line-height: 1.6;
+  letter-spacing: 0;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: var(--sp-2) var(--sp-3);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  background-color: var(--bg-elev-2);
+  color: var(--text-strong);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.prose tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* ---- rules ---- */
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border-soft);
+  margin: var(--sp-10) 0;
+}
+
+/* ---- media ---- */
+.prose img {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  margin: var(--sp-6) auto;
+}
+
+.prose figure {
+  margin: var(--sp-6) 0;
+}
+
+.prose figcaption {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.prose video,
+.prose iframe {
+  max-width: 100%;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+}
+
+/* ---- footnotes (remark-gfm produces these) ---- */
+.prose .footnotes {
+  margin-top: var(--sp-15);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-soft);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.prose .footnotes ol {
+  padding-left: 1.2em;
+}
+
+.prose .data-footnote-backref {
+  border-bottom: none;
+  color: var(--text-dim);
+}
+
+/* ---- standalone (About page renders the same markdown pipeline) ---- */
+.prose--page {
+  max-width: var(--w-prose);
+  padding-bottom: var(--sp-20);
+}

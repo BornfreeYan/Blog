@@ -1,0 +1,14 @@
+---
+const { title, allHref } = Astro.props;
+---
+
+<div class="section-header">
+  <h2 class="section-title">{title}</h2>
+  {
+    allHref && (
+      <a class="section-all" href={allHref}>
+        All<span class="arrow">↗</span>
+      </a>
+    )
+  }
+</div>

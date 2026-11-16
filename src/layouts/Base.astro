@@ -1,0 +1,38 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { url } from '../lib/url.js';
+import '../styles/global.css';
+
+const {
+  title = "Yan's Blog",
+  description = 'Notes, projects, and technical retrospectives.',
+} = Astro.props;
+
+const pageTitle = title === "Yan's Blog" ? title : `${title} — Yan's Blog`;
+const rssHref = url('rss.xml');
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#121212" />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="sitemap" href={url('sitemap-index.xml')} />
+    <link rel="alternate" type="application/rss+xml" title="Yan's Blog" href={rssHref} />
+  </head>
+  <body>
+    <Header />
+    <main class="site-main">
+      <div class="container">
+        <slot />
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>

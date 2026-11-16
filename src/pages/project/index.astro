@@ -1,0 +1,239 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { url } from '../../lib/url.js';
+import projects from '../../data/projects.json';
+---
+
+<Base title="Projects" description="Things I've built and maintain.">
+  <PageHeader
+    label="Portfolio"
+    title="Projects"
+    desc="Open-source work, experiments, and long-running repositories."
+  />
+
+  <div class="projects" id="projects">
+    {
+      projects.map((project) => (
+        <a
+          class="project"
+          href={project.href}
+          target="_blank"
+          rel="noopener"
+          data-repo={project.repo}
+        >
+          <div class="project__main">
+            <h2 class="project__name">
+              {project.name}
+              <span class="arrow">↗</span>
+            </h2>
+            {project.desc && <p class="project__desc">{project.desc}</p>}
+            {project.tags?.length > 0 && (
+              <div class="tag-list project__tags">
+                {project.tags.map((tag) => (
+                  <span class="badge badge--tag">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div class="project__stats">
+            <span class="project__stat" data-stat="stars" hidden>
+              <span class="project__stat-value"></span>
+              <span class="project__stat-label">star</span>
+            </span>
+            <span class="project__stat" data-stat="language" hidden>
+              <span class="project__stat-value"></span>
+            </span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+  {projects.length === 0 && <p class="empty">No projects yet.</p>}
+</Base>
+
+<style>
+  .projects {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border);
+    padding-bottom: var(--sp-20);
+  }
+
+  .project {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--sp-8);
+    padding: var(--sp-5) 0;
+    border-bottom: 1px solid var(--border-soft);
+    transition: border-color var(--transition);
+  }
+
+  .project:hover {
+    border-bottom-color: var(--border);
+  }
+
+  .project__main {
+    min-width: 0;
+  }
+
+  .project__name {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-md);
+    font-weight: 700;
+    color: var(--text-strong);
+    margin: 0 0 var(--sp-2) 0;
+    transition: color var(--transition);
+  }
+
+  .project:hover .project__name {
+    color: var(--accent-soft);
+  }
+
+  .project:hover .arrow {
+    color: var(--accent-soft);
+  }
+
+  .project__desc {
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin: 0 0 var(--sp-3) 0;
+    max-width: 60ch;
+  }
+
+  .project__tags {
+    margin-top: var(--sp-1);
+  }
+
+  .project__stats {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    flex-shrink: 0;
+    padding-top: 2px;
+    font-size: var(--fs-sm);
+    color: var(--text-dim);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .project__stat {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    white-space: nowrap;
+  }
+
+  .project__stat[hidden] {
+    display: none;
+  }
+
+  .project__stat svg {
+    width: 12px;
+    height: 12px;
+    align-self: center;
+    fill: currentColor;
+  }
+
+  .project__stat-label {
+    font-size: var(--fs-xs);
+  }
+
+  @media (max-width: 700px) {
+    .project {
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Star counts come from the public GitHub API, fetched in the browser.
+   * - unauthenticated: 60 requests/hour per visitor IP, so results are cached
+   *   in localStorage for an hour and repeat visits don't spend a request
+   * - any failure hides the stat entirely; nothing shows a wrong number
+   */
+  const CACHE_KEY = 'gh-stars-v1';
+  const TTL = 60 * 60 * 1000;
+
+  const readCache = () => {
+    try {
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (!raw) return {};
+      const parsed = JSON.parse(raw);
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch {
+      return {};
+    }
+  };
+
+  const writeCache = (cache) => {
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+    } catch {
+      /* private mode / quota — stars just won't be cached */
+    }
+  };
+
+  const format = (n) => (n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k` : String(n));
+
+  const starIcon =
+    '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .67.418l1.88 3.81 4.2.61a.75.75 0 0 1 .42 1.28l-3.04 2.97.72 4.19a.75.75 0 0 1-1.09.79L8 12.35l-3.76 1.97a.75.75 0 0 1-1.09-.79l.72-4.19L.83 6.37a.75.75 0 0 1 .42-1.28l4.2-.61L7.33.668A.75.75 0 0 1 8 .25Z"/></svg>';
+
+  async function loadStars() {
+    const cards = Array.from(document.querySelectorAll('.project[data-repo]'));
+    if (cards.length === 0) return;
+
+    const cache = readCache();
+    const now = Date.now();
+
+    await Promise.all(
+      cards.map(async (card) => {
+        const repo = card.dataset.repo;
+        if (!repo) return;
+
+        let data = cache[repo];
+        const fresh = data && now - data.at < TTL;
+
+        if (!fresh) {
+          try {
+            const res = await fetch(`https://api.github.com/repos/${repo}`, {
+              headers: { Accept: 'application/vnd.github+json' },
+            });
+            if (!res.ok) return;
+            const json = await res.json();
+            data = {
+              stars: json.stargazers_count,
+              language: json.language,
+              at: now,
+            };
+            cache[repo] = data;
+            writeCache(cache);
+          } catch {
+            return;
+          }
+        }
+
+        const starEl = card.querySelector('[data-stat="stars"]');
+        const langEl = card.querySelector('[data-stat="language"]');
+
+        if (starEl && typeof data.stars === 'number') {
+          starEl.querySelector('.project__stat-value').innerHTML = `${starIcon}${format(data.stars)}`;
+          starEl.hidden = false;
+        }
+
+        if (langEl && data.language) {
+          langEl.querySelector('.project__stat-value').textContent = data.language;
+          langEl.hidden = false;
+        }
+      }),
+    );
+  }
+
+  loadStars();
+</script>

@@ -1,0 +1,30 @@
+---
+import { url, isActive } from '../lib/url.js';
+
+const pathname = Astro.url.pathname;
+const links = [
+  { href: url(''), label: 'Home', key: '' },
+  { href: url('article/'), label: 'Article', key: 'article' },
+  { href: url('project/'), label: 'Project', key: 'project' },
+  { href: url('about/'), label: 'About', key: 'about' },
+];
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="logo" href={url('')}>Yan's Blog</a>
+    <nav class="nav" aria-label="Main">
+      {
+        links.map((link) => (
+          <a
+            class="nav__link"
+            href={link.href}
+            aria-current={isActive(pathname, link.key) ? 'page' : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

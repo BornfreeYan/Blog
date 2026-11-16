@@ -1,0 +1,13 @@
+---
+/**
+ * Title …… meta — the leader-line row used by Home and Project.
+ * `meta` is plain text rendered right-aligned after the dotted leader.
+ */
+const { href, title, meta } = Astro.props;
+---
+
+<a class="list-row" href={href}>
+  <span class="list-row__title">{title}</span>
+  <span class="list-row__leader" aria-hidden="true"></span>
+  {meta && <span class="list-row__meta">{meta}</span>}
+</a>

@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ListRow from '../components/ListRow.astro';
+import { getPosts, postHref } from '../lib/posts.js';
+import { isoDate } from '../lib/date.js';
+import { url } from '../lib/url.js';
+import { site } from '../data/site.js';
+import projects from '../data/projects.json';
+
+const posts = await getPosts();
+const latestPosts = posts.slice(0, site.homeArticleCount);
+const latestProjects = projects.slice(0, site.projectArticleCount);
+---
+
+<Base>
+  <section class="bio">
+    <div class="bio__text">
+      {site.bio.map((para) => <p set:html={para} />)}
+    </div>
+    <div class="social-links">
+      {
+        site.links.map((link) => (
+          <a
+            class="social-link"
+            href={link.href}
+            rel={link.href.startsWith('http') ? 'noopener' : undefined}
+            target={link.href.startsWith('http') ? '_blank' : undefined}
+          >
+            {link.label}
+            <span class="arrow">↗</span>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionHeader title="Article" allHref={url('article/')} />
+    <div class="list">
+      {
+        latestPosts.map((post) => (
+          <ListRow
+            href={url(postHref(post))}
+            title={post.data.title}
+            meta={isoDate(post.data.date)}
+          />
+        ))
+      }
+      {latestPosts.length === 0 && <p class="empty">No articles yet.</p>}
+    </div>
+  </section>
+
+  <section class="section">
+    <SectionHeader title="Project" allHref={url('project/')} />
+    <div class="list">
+      {
+        latestProjects.map((project) => (
+          <ListRow
+            href={project.href}
+            title={project.name}
+            meta={project.tags?.[0] ?? ''}
+          />
+        ))
+      }
+    </div>
+  </section>
+</Base>

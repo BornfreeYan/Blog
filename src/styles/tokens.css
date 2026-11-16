@@ -1,0 +1,100 @@
+/* ==========================================================================
+   Design tokens — the single source of truth for the blog's visual language.
+   Every color, size and spacing value used anywhere else comes from here.
+   Dark-only for now; a light theme would be a second :root block overriding
+   the same variable names.
+   ========================================================================== */
+
+:root {
+  /* ---- surfaces ---- */
+  --bg: #121212;
+  --bg-elev: #171717;      /* code blocks, cards */
+  --bg-elev-2: #1a1a1a;    /* table headers, inline code, badge wells */
+  --bg-control: #262626;   /* buttons */
+
+  /* ---- lines ---- */
+  --border: #333333;       /* every visible divider */
+  --border-soft: #262626;  /* footer rule, quieter edges */
+
+  /* ---- text ---- */
+  --text-hi: #ffffff;      /* h1, active nav, bold emphasis */
+  --text-strong: #e5e5e5;  /* list titles, section titles */
+  --text: #d4d4d4;         /* body copy */
+  --text-muted: #a3a3a3;   /* inactive nav, metadata values */
+  --text-dim: #808080;     /* dates, footer, page labels, TOC */
+  --text-faint: #666666;   /* decorative only — never carries information */
+
+  /* ---- accent (amber) ---- */
+  --accent: #d2994a;        /* nav underline, title period, progress ring */
+  --accent-soft: #d4ba85;   /* every hover, tag badges */
+  --accent-deep: #8c6e43;   /* category badge, blockquote rule */
+  --accent-on: #171717;     /* text on --accent-soft */
+  --accent-on-deep: #f2e6d6;/* text on --accent-deep */
+
+  /* ---- type ---- */
+  /* The generic `monospace` must come last: it terminates the stack, so any
+     font listed after it is never reached. Latin renders in the mono faces,
+     Chinese falls through to the CJK sans, then the generic. */
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, "Courier New";
+  --font-cjk: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB";
+  --font-stack: var(--font-mono), var(--font-cjk), monospace;
+
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-base: 15px;
+  --fs-md: 17px;
+  --fs-lg: 20px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+  --fs-3xl: 40px;
+
+  --lh-body: 1.8;
+  --lh-prose: 1.85;
+  --lh-tight: 1.4;
+  --lh-code: 1.6;
+  --tracking: 0.5px;
+
+  /* ---- layout ---- */
+  --w-container: 1100px;
+  --w-prose: 720px;
+  --w-sidebar: 220px;
+  --gutter: 20px;
+  --gap-sidebar: 48px;
+
+  /* ---- spacing scale (multiples of 4) ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-15: 60px;
+  --sp-20: 80px;
+
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-pill: 16px;
+
+  --transition: 0.3s ease;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --fs-3xl: 32px;
+    --fs-2xl: 26px;
+    --w-sidebar: 100%;
+    --gap-sidebar: 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --gutter: 16px;
+    --fs-3xl: 28px;
+    --sp-15: 40px;
+    --sp-20: 48px;
+  }
+}

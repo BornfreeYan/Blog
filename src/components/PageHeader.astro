@@ -1,0 +1,9 @@
+---
+const { label, title, desc } = Astro.props;
+---
+
+<div class="page-header">
+  {label && <div class="page-label">{label}</div>}
+  <h1 class="page-title">{title}</h1>
+  {desc && <p class="page-desc">{desc}</p>}
+</div>

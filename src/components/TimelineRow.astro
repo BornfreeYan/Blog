@@ -1,0 +1,16 @@
+---
+import { isoDate } from '../lib/date.js';
+
+const { href, date, title, summary } = Astro.props;
+---
+
+<a class="timeline-row" href={href}>
+  <time class="timeline-row__date" datetime={isoDate(date)}>{isoDate(date)}</time>
+  <span class="timeline-row__track" aria-hidden="true">
+    <span class="timeline-row__dot"></span>
+  </span>
+  <div class="timeline-row__body">
+    <h3 class="timeline-row__title">{title}</h3>
+    {summary && <p class="timeline-row__summary">{summary}</p>}
+  </div>
+</a>

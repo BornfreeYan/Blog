@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import TimelineRow from '../../components/TimelineRow.astro';
+import { getPosts, postHref, postSummary } from '../../lib/posts.js';
+import { url } from '../../lib/url.js';
+
+const posts = await getPosts();
+---
+
+<Base title="All Articles" description="Everything I've written — notes, projects, and retrospectives.">
+  <PageHeader
+    label="Archive"
+    title="All Articles"
+    desc="Notes, projects, and technical retrospectives are all here."
+  />
+
+  <div class="timeline">
+    {
+      posts.map((post) => (
+        <TimelineRow
+          href={url(postHref(post))}
+          date={post.data.date}
+          title={post.data.title}
+          summary={postSummary(post)}
+        />
+      ))
+    }
+    {posts.length === 0 && <p class="empty">No articles yet.</p>}
+  </div>
+</Base>

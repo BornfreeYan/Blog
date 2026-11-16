@@ -1,0 +1,15 @@
+---
+import { url } from '../lib/url.js';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer__left">
+    <div class="site-footer__copyright">@{year} BornfreeYan</div>
+    <div>All rights reserved.</div>
+  </div>
+  <div class="site-footer__right">
+    <a href={url('rss.xml')}>RSS</a>
+  </div>
+</footer>
