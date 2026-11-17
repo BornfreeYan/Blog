@@ -39,9 +39,6 @@ import projects from '../../data/projects.json';
             <span class="project__stat" data-stat="stars" hidden>
               <span class="project__stat-value"></span>
             </span>
-            <span class="project__stat" data-stat="language" hidden>
-              <span class="project__stat-value"></span>
-            </span>
           </div>
         </a>
       ))
@@ -130,11 +127,14 @@ import projects from '../../data/projects.json';
     display: none;
   }
 
-  .project__stat svg {
-    width: 12px;
-    height: 12px;
-    flex-shrink: 0;
-    fill: currentColor;
+  /* The icon is injected at runtime, so it carries no scoped attribute and a
+     `.project__stat svg` rule would never match it. Colour is applied inline
+     from the script instead; this block only sizes the star well. */
+  .project__stat-value {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-dim);
   }
 
   @media (max-width: 760px) {
@@ -152,7 +152,8 @@ import projects from '../../data/projects.json';
    *   in localStorage for an hour and repeat visits don't spend a request
    * - any failure hides the stat entirely; nothing shows a wrong number
    */
-  const CACHE_KEY = 'gh-stars-v1';
+  // v2: the payload no longer stores `language`, so old entries are ignored
+  const CACHE_KEY = 'gh-stars-v2';
   const TTL = 60 * 60 * 1000;
 
   const readCache = () => {
@@ -176,8 +177,14 @@ import projects from '../../data/projects.json';
 
   const format = (n) => (n >= 1000 ? `${(n / 1000).toFixed(1).replace(/\.0$/, '')}k` : String(n));
 
+  /* Inline attributes rather than a stylesheet rule: this markup is injected
+     after the scoped CSS has been compiled, so it never receives the scope
+     attribute and `.project__stat-value svg` would not apply. */
   const starIcon =
-    '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .67.418l1.88 3.81 4.2.61a.75.75 0 0 1 .42 1.28l-3.04 2.97.72 4.19a.75.75 0 0 1-1.09.79L8 12.35l-3.76 1.97a.75.75 0 0 1-1.09-.79l.72-4.19L.83 6.37a.75.75 0 0 1 .42-1.28l4.2-.61L7.33.668A.75.75 0 0 1 8 .25Z"/></svg>';
+    '<svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true" ' +
+    'style="flex:0 0 auto;fill:var(--accent-soft)">' +
+    '<path d="M8 .25a.75.75 0 0 1 .67.418l1.88 3.81 4.2.61a.75.75 0 0 1 .42 1.28l-3.04 2.97.72 4.19a.75.75 0 0 1-1.09.79L8 12.35l-3.76 1.97a.75.75 0 0 1-1.09-.79l.72-4.19L.83 6.37a.75.75 0 0 1 .42-1.28l4.2-.61L7.33.668A.75.75 0 0 1 8 .25Z"/>' +
+    '</svg>';
 
   async function loadStars() {
     const cards = Array.from(document.querySelectorAll('.project[data-repo]'));
@@ -201,11 +208,7 @@ import projects from '../../data/projects.json';
             });
             if (!res.ok) return;
             const json = await res.json();
-            data = {
-              stars: json.stargazers_count,
-              language: json.language,
-              at: now,
-            };
+            data = { stars: json.stargazers_count, at: now };
             cache[repo] = data;
             writeCache(cache);
           } catch {
@@ -214,16 +217,10 @@ import projects from '../../data/projects.json';
         }
 
         const starEl = card.querySelector('[data-stat="stars"]');
-        const langEl = card.querySelector('[data-stat="language"]');
 
         if (starEl && typeof data.stars === 'number') {
-          starEl.querySelector('.project__stat-value').innerHTML = `${starIcon}${format(data.stars)}`;
+          starEl.querySelector('.project__stat-value').innerHTML = `${starIcon}<span>${format(data.stars)}</span>`;
           starEl.hidden = false;
-        }
-
-        if (langEl && data.language) {
-          langEl.querySelector('.project__stat-value').textContent = data.language;
-          langEl.hidden = false;
         }
       }),
     );

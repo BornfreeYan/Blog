@@ -294,22 +294,26 @@ const meta = [
     .post-layout {
       flex-direction: column;
     }
+
+    /* On phones the outline is more noise than help: it pushes the article
+       title below the fold and its entries read as a wall of wrapped text.
+       Drop the TOC entirely and keep only the progress readout, which answers
+       "how far in am I" without claiming a block of its own. */
+    .toc-title,
+    .toc {
+      display: none;
+    }
+
     .post-sidebar {
       width: 100%;
       position: static;
-      border-bottom: 1px solid var(--border);
-      padding-bottom: var(--sp-5);
-    }
-
-    .progress-wrap {
+      border-bottom: none;
+      padding-bottom: 0;
       margin-bottom: var(--sp-5);
     }
 
-    .toc {
-      border-left: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--sp-2) var(--sp-4);
+    .progress-wrap {
+      margin-bottom: 0;
     }
 
     .toc__item {

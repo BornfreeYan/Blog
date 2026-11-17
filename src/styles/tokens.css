@@ -49,7 +49,9 @@
   --fs-3xl: 40px;
 
   --lh-body: 1.8;
-  --lh-prose: 1.85;
+  /* Prose runs tighter than the UI: monospace already has generous built-in
+     leading, so 1.85 on top of it read as airy gaps rather than lines. */
+  --lh-prose: 1.72;
   --lh-tight: 1.4;
   --lh-code: 1.6;
   --tracking: 0.5px;

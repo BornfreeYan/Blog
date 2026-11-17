@@ -20,7 +20,7 @@
 }
 
 .prose > * + * {
-  margin-block-start: var(--sp-6);
+  margin-block-start: var(--sp-5);
 }
 
 .prose h2,
@@ -34,22 +34,22 @@
 
 .prose h2 {
   font-size: var(--fs-xl);
-  margin-block-start: var(--sp-15);
-  margin-block-end: var(--sp-4);
+  margin-block-start: var(--sp-12);
+  margin-block-end: var(--sp-3);
   padding-bottom: var(--sp-2);
   border-bottom: 1px solid var(--border);
 }
 
 .prose h3 {
   font-size: var(--fs-lg);
-  margin-block-start: var(--sp-10);
-  margin-block-end: var(--sp-3);
+  margin-block-start: var(--sp-8);
+  margin-block-end: var(--sp-2);
 }
 
 .prose h4 {
   font-size: var(--fs-md);
-  margin-block-start: var(--sp-8);
-  margin-block-end: var(--sp-3);
+  margin-block-start: var(--sp-6);
+  margin-block-end: var(--sp-2);
 }
 
 /* the very first element should not push the article down */
