@@ -107,6 +107,13 @@ function Get-ListItemRange {
 }
 
 # Runs an npm script in the blog directory and returns exit code + output.
+#
+# Notes on PowerShell 5.1: redirecting a native command's stderr with 2>&1
+# wraps every stderr line in an ErrorRecord (NativeCommandError) and makes $?
+# false, even when the process exited 0. Astro writes routine notices — such
+# as a Shiki fallback for an unrecognised fence language — to stderr, so under
+# $ErrorActionPreference = 'Stop' a *successful* build would throw. Relax the
+# preference for the duration of the call and trust $LASTEXITCODE alone.
 function Invoke-NpmBuild {
     param([string]$PostsDirOverride, [string]$OutDir)
 
@@ -114,14 +121,34 @@ function Invoke-NpmBuild {
     if ($PostsDirOverride) { $env:POSTS_DIR = $PostsDirOverride }
     else { Remove-Item Env:\POSTS_DIR -ErrorAction SilentlyContinue }
 
+    $savedEap = $ErrorActionPreference
     Push-Location -LiteralPath $BlogRoot
     try {
+        $ErrorActionPreference = 'Continue'
         $output = & npm run build --silent -- --outDir $OutDir 2>&1
         $code   = $LASTEXITCODE
     } finally {
+        $ErrorActionPreference = $savedEap
         Pop-Location
         if ($previous) { $env:POSTS_DIR = $previous }
         else { Remove-Item Env:\POSTS_DIR -ErrorAction SilentlyContinue }
+    }
+
+    return [pscustomobject]@{ Code = $code; Output = $output }
+}
+
+# Runs a git command and returns its exit code and combined output. Same
+# stderr caveat as Invoke-NpmBuild: git narrates routine work on stderr.
+function Invoke-Git {
+    param([string[]]$Arguments)
+
+    $savedEap = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        $output = & git -C $BlogRoot @Arguments 2>&1
+        $code   = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $savedEap
     }
 
     return [pscustomobject]@{ Code = $code; Output = $output }
@@ -339,11 +366,12 @@ try {
     }
     Write-Ok 'production build passed'
 
-    & git -C $BlogRoot add -A | Out-Null
-    if ($LASTEXITCODE -ne 0) { throw 'git add failed.' }
+    $add = Invoke-Git -Arguments @('add', '-A')
+    if ($add.Code -ne 0) { throw 'git add failed.' }
 
-    & git -C $BlogRoot diff --cached --quiet
-    if ($LASTEXITCODE -eq 0) {
+    # 0 means nothing staged, 1 means there is something to commit.
+    $diff = Invoke-Git -Arguments @('diff', '--cached', '--quiet')
+    if ($diff.Code -eq 0) {
         Write-Warn 'No changes to commit: the blog already matches the vault.'
         Write-Host "`n[DONE] Nothing to push." -ForegroundColor Yellow
         Remove-TempRoot
@@ -351,10 +379,12 @@ try {
     }
 
     $message = "Publish $written note(s) from the vault`n`nCo-Authored-By: Claude Code <noreply@anthropic.com>"
-    & git -C $BlogRoot commit -q -m $message
-    if ($LASTEXITCODE -ne 0) { throw 'git commit failed.' }
+    $commit = Invoke-Git -Arguments @('commit', '-q', '-m', $message)
+    if ($commit.Code -ne 0) { throw 'git commit failed.' }
 
-    $sha = (& git -C $BlogRoot rev-parse --short HEAD).Trim()
+    $rev = Invoke-Git -Arguments @('rev-parse', '--short', 'HEAD')
+    if ($rev.Code -ne 0) { throw 'Could not read the new commit id.' }
+    $sha = ($rev.Output | Select-Object -First 1).ToString().Trim()
     Write-Ok ("committed {0}" -f $sha)
 
     # -- 6. Push ------------------------------------------------------------
@@ -365,10 +395,10 @@ try {
     $pushed = $false
 
     for ($attempt = 1; $attempt -le 3; $attempt++) {
-        $pushLog = & git -C $BlogRoot push origin main 2>&1
-        if ($LASTEXITCODE -eq 0) { $pushed = $true; break }
+        $push = Invoke-Git -Arguments @('push', 'origin', 'main')
+        if ($push.Code -eq 0) { $pushed = $true; break }
 
-        $reason = ($pushLog | Select-Object -Last 1)
+        $reason = ($push.Output | Where-Object { "$_".Trim() } | Select-Object -Last 1)
         if ($attempt -lt 3) {
             $wait = $delays[$attempt - 1]
             Write-Warn ("attempt {0}/3 failed: {1}" -f $attempt, $reason)
