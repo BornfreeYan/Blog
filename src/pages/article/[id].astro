@@ -124,12 +124,22 @@ const meta = [
   }
 
   /* ---------- sidebar ---------- */
+  /* The outline is often taller than the viewport on long notes. Sticking the
+     whole sidebar pins it to the top of the page, which leaves the lower
+     entries permanently off-screen until the reader reaches the very bottom of
+     the article. Instead the sidebar sticks, and the list scrolls inside it,
+     so every entry stays reachable regardless of article length. */
   .post-sidebar {
     width: var(--w-sidebar);
     flex-shrink: 0;
     position: sticky;
     top: var(--sp-10);
     align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    /* never taller than the space between the top offset and the viewport edge */
+    max-height: calc(100dvh - var(--sp-10) - var(--sp-6));
+    min-height: 0;
   }
   .progress-wrap {
     display: flex;
@@ -182,6 +192,22 @@ const meta = [
     padding: 0;
     margin: 0;
     border-left: 1px solid var(--border);
+    /* the list, not the sidebar, takes the overflow */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    min-height: 0;
+    /* room for the active item's tick marks so they are not clipped */
+    padding-right: var(--sp-2);
+  }
+
+  /* the same slim scrollbar treatment as the rest of the site */
+  .toc::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .toc::-webkit-scrollbar-thumb {
+    border: none;
+    border-radius: var(--radius-pill);
   }
 
   .toc__item {
@@ -366,7 +392,24 @@ const meta = [
           }
         }
         for (const link of links) {
-          link.classList.toggle('active', link.dataset.target === current);
+          const isCurrent = link.dataset.target === current;
+          link.classList.toggle('active', isCurrent);
+        }
+
+        // Keep the highlighted entry inside the outline's own scroll box, so
+        // the reader can always see where they are in a long article.
+        const activeLink = links.find((l) => l.dataset.target === current);
+        const list = activeLink?.closest('.toc');
+        if (activeLink && list && list.scrollHeight > list.clientHeight) {
+          const linkBox = activeLink.getBoundingClientRect();
+          const listBox = list.getBoundingClientRect();
+          const margin = 24;
+
+          if (linkBox.top < listBox.top + margin) {
+            list.scrollTop += linkBox.top - listBox.top - margin;
+          } else if (linkBox.bottom > listBox.bottom - margin) {
+            list.scrollTop += linkBox.bottom - listBox.bottom + margin;
+          }
         }
       }
 

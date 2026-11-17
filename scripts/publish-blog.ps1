@@ -163,6 +163,37 @@ $exitCode = 0
 try {
     New-Item -ItemType Directory -Path $StageDir -Force | Out-Null
 
+    # -- 0. Upstream check --------------------------------------------------
+
+    # If the theme changed remotely since the last pull, pushing will be
+    # rejected at the very last step, after the posts have already been swapped
+    # in. Catch it up front instead, while nothing local has been touched.
+    Write-Step '[0/6] Checking the local clone is up to date ...'
+
+    $fetch = Invoke-Git -Arguments @('fetch', '--quiet', 'origin', 'main')
+    if ($fetch.Code -ne 0) {
+        Write-Warn 'Could not reach origin; continuing (the push step will retry).'
+    } else {
+        $counts = Invoke-Git -Arguments @('rev-list', '--left-right', '--count', 'origin/main...HEAD')
+        if ($counts.Code -eq 0) {
+            $parts = ("$($counts.Output)" -split '\s+') | Where-Object { $_ }
+            $behind = if ($parts.Count -ge 1) { [int]$parts[0] } else { 0 }
+            $ahead  = if ($parts.Count -ge 2) { [int]$parts[1] } else { 0 }
+
+            if ($behind -gt 0) {
+                Write-Fail ("local clone is {0} commit(s) behind origin/main" -f $behind)
+                Write-Detail 'Run this first, then start the script again:'
+                Write-Detail ("    git -C `"$BlogRoot`" pull --ff-only")
+                throw 'Local clone is behind origin. Nothing was modified.'
+            }
+            if ($ahead -gt 0) {
+                Write-Warn ("{0} local commit(s) not yet pushed; they will ride along" -f $ahead)
+            } else {
+                Write-Ok 'up to date with origin/main'
+            }
+        }
+    }
+
     # -- 1. Scan ------------------------------------------------------------
 
     Write-Step '[1/6] Scanning the knowledge base for publish: True ...'
@@ -366,7 +397,11 @@ try {
     }
     Write-Ok 'production build passed'
 
-    $add = Invoke-Git -Arguments @('add', '-A')
+    # Stage only the posts directory. `git add -A` would sweep up whatever else
+    # happens to be modified in the working tree — a half-finished theme tweak,
+    # a config edit — and push it under a commit message about publishing
+    # notes. Anything outside src/content/posts/ is left for its own commit.
+    $add = Invoke-Git -Arguments @('add', '--', 'src/content/posts')
     if ($add.Code -ne 0) { throw 'git add failed.' }
 
     # 0 means nothing staged, 1 means there is something to commit.
@@ -376,6 +411,16 @@ try {
         Write-Host "`n[DONE] Nothing to push." -ForegroundColor Yellow
         Remove-TempRoot
         exit 0
+    }
+
+    # Uncommitted work elsewhere in the tree is not ours to publish. Say so
+    # rather than silently folding it into the push.
+    $dirty = Invoke-Git -Arguments @('status', '--porcelain', '--', '.', ':(exclude)src/content/posts')
+    $otherChanges = @($dirty.Output | Where-Object { "$_".Trim() })
+    if ($otherChanges.Count -gt 0) {
+        Write-Warn ("{0} other change(s) in the working tree are NOT part of this commit:" -f $otherChanges.Count)
+        $otherChanges | Select-Object -First 5 | ForEach-Object { Write-Detail ("$_".Trim()) }
+        if ($otherChanges.Count -gt 5) { Write-Detail ("... and {0} more" -f ($otherChanges.Count - 5)) }
     }
 
     $message = "Publish $written note(s) from the vault`n`nCo-Authored-By: Claude Code <noreply@anthropic.com>"
