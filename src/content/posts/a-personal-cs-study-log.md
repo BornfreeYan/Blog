@@ -1,0 +1,52 @@
+---
+title: CS学习记录
+date: 2026-11-18
+tags:
+  - 日志
+categories:
+  - CS
+draft: false
+---
+> 个人的CS学习日志，包括正在维护的笔记和项目
+
+## Backend Dev
+
+- [x] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)
+- [ ] [FastAPI](https://bornfreeyan.github.io/Blog/article/2-fastapi/)，完善中
+- [ ] [Mysql](https://bornfreeyan.github.io/Blog/article/3-mysql/)，完善中
+- [ ] [Redis](https://bornfreeyan.github.io/Blog/article/4-redis/)，未开始
+- [ ] [RabbitMQ](https://bornfreeyan.github.io/Blog/article/5-rabbitmq/)，未开始
+- [ ] [Go](https://bornfreeyan.github.io/Blog/article/6-go/)，未开始
+- [ ] [C](https://bornfreeyan.github.io/Blog/article/7-c/)，未开始
+- [ ] [Gin](https://bornfreeyan.github.io/Blog/article/8-gin/)，未开始
+
+## Frontend Dev
+
+- [ ] [HTML](https://bornfreeyan.github.io/Blog/article/1-html/)，完善中
+- [ ] [CSS](https://bornfreeyan.github.io/Blog/article/2-css/)，完善中
+- [ ] [Javascript](https://bornfreeyan.github.io/Blog/article/3-javascript/)，完善中
+
+## DevOps & Tools
+
+- [x] [Git/Github](https://bornfreeyan.github.io/Blog/article/git-version-control/)
+- [ ] [Vibecode skill](https://bornfreeyan.github.io/Blog/article/vibecode/)，完善中
+- [ ] [Linux](https://bornfreeyan.github.io/Blog/article/linux/)，完善中
+- [ ] [Nginx](https://bornfreeyan.github.io/Blog/article/nginx/)，完善中
+- [ ] [docker](https://bornfreeyan.github.io/Blog/article/docker/)，完善中
+
+## Leetcode
+
+暂无安排。
+
+## Interview & Knowledge
+
+- [ ] [计算机组成原理](https://bornfreeyan.github.io/Blog/article/0-computer-architecture/)，未开始 
+- [ ] [计算机网络](https://bornfreeyan.github.io/Blog/article/0-computer-network/)，未开始
+- [ ] [数据结构与算法](https://bornfreeyan.github.io/Blog/article/0-data-structure-and-algorithm/)，未开始
+- [ ] [操作系统](https://bornfreeyan.github.io/Blog/article/0-operation-system/)，未开始
+
+## Projects
+
+- [x] [Webdesk](https://github.com/BornfreeYan/WebDesk) ，finished，顶多小修小改
+- [ ] [个人数字图像处理速成仓库](https://github.com/BornfreeYan/personal-DIP-crash-course)，完善中
+- [ ] [个人简历](https://github.com/BornfreeYan/my-Resume)，完善中
