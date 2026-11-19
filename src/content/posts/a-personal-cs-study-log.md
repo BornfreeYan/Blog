@@ -11,13 +11,13 @@ draft: false
 
 ## Backend Dev
 
-- [x] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)
+- [ ] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)，261119结束
 - [ ] [FastAPI](https://bornfreeyan.github.io/Blog/article/2-fastapi/)，完善中
 - [ ] [Mysql](https://bornfreeyan.github.io/Blog/article/3-mysql/)，完善中
 - [ ] [Redis](https://bornfreeyan.github.io/Blog/article/4-redis/)，未开始
 - [ ] [RabbitMQ](https://bornfreeyan.github.io/Blog/article/5-rabbitmq/)，未开始
-- [ ] [Go](https://bornfreeyan.github.io/Blog/article/6-go/)，未开始
-- [ ] [C](https://bornfreeyan.github.io/Blog/article/7-c/)，未开始
+- [ ] [Go](https://bornfreeyan.github.io/Blog/article/6-go/)，261119结束
+- [ ] [C](https://bornfreeyan.github.io/Blog/article/7-c/)，261119结束
 - [ ] [Gin](https://bornfreeyan.github.io/Blog/article/8-gin/)，未开始
 
 ## Frontend Dev
