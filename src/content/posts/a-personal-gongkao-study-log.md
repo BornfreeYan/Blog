@@ -13,4 +13,4 @@ draft: false
 - [x] [高质量的公考资源](https://github.com/KejuLab/awesome-kaogong-resources)，维护中
 - [x] [公考资料处理skill](https://github.com/KejuLab/gongkao-material-ingest-skill)，**实验性质**，在使用中优化
 - [ ] [个人学习仓库](https://github.com/KejuLab/civil-service-exam-journey)，核心地带，更新中
-  - [ ] 261119，重启
+  - [ ] 261120，重启
