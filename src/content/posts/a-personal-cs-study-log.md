@@ -11,12 +11,12 @@ draft: false
 
 ## Backend Dev
 
-- [ ] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)，261120结束
+- [ ] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)，261121结束
 - [ ] [FastAPI](https://bornfreeyan.github.io/Blog/article/2-fastapi/)，完善中
 - [ ] [Mysql](https://bornfreeyan.github.io/Blog/article/3-mysql/)，完善中
 - [ ] [Redis](https://bornfreeyan.github.io/Blog/article/4-redis/)，未开始
 - [ ] [RabbitMQ](https://bornfreeyan.github.io/Blog/article/5-rabbitmq/)，未开始
-- [ ] [Go](https://bornfreeyan.github.io/Blog/article/6-go/)，261120-261121
+- [ ] [Go](https://bornfreeyan.github.io/Blog/article/6-go/)，261120-261122
 - [ ] [Gin](https://bornfreeyan.github.io/Blog/article/7-gin/)，未开始
 
 ## Frontend Dev
@@ -35,7 +35,7 @@ draft: false
 
 ## Leetcode
 
-暂无安排。
+- [x] [Leetcode数组](https://bornfreeyan.github.io/Blog/article/1-array/)，261122
 
 ## Interview & Knowledge
 

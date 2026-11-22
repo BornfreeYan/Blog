@@ -4,7 +4,7 @@ date: 2026-11-08
 tags:
   - 图床
 categories:
-  - 技术博客
+  - 随笔
 draft: false
 ---
 
