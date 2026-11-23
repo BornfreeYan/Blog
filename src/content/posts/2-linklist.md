@@ -1,12 +1,23 @@
 ---
 title: Leetcode链表合集
-date: 2026-11-19
+date: 2026-11-23
 tags:
   - Leetcode
 categories:
   - CS
 draft: false
 ---
+
+| 题型分类 | 题目 |
+| --- | --- |
+| 理论基础 | [链表理论基础](#链表理论基础) |
+| 虚拟头节点 | [203 移除链表元素](#203移除链表元素) |
+| 链表设计 | [707 设计链表](#707设计链表) |
+| 双指针 | [206 反转链表](#206反转链表) |
+| 虚拟头节点 | [24 两两交换链表中的节点](#24两两交换链表中的节点) |
+| 双指针 | [19 删除链表的倒数第n个节点](#19删除链表的倒数第n个节点) |
+| 双指针 | [160 链表相交](#160链表相交) |
+| 快慢指针 | [142 环形链表2](#142环形链表2) |
 
 ## 链表理论基础
 
@@ -63,7 +74,7 @@ class ListNode:
 | **数组** | O(n)       | O(1)     | 数据量固定、频繁查询，较少增删  |
 | **链表** | O(1)       | O(n)     | 数据量不固定，频繁增删，较少查询 |
 
-## 203.移除链表元素
+## 203移除链表元素
 
 [203.移除链表元素](https://leetcode.cn/problems/remove-linked-list-elements/description/)
 题意：删除链表中等于给定值 val 的所有节点。
@@ -175,7 +186,7 @@ dummy 是变量（房子本身）    &dummy 是地址（门牌号）
   (用 . )                      (用 ->)
 ```
 
-## 707.设计链表
+## 707设计链表
 
 > 这道题其实就是头插法、尾插法、删除、增加节点等考研计算机都常见的操作，但是由于`MyLinkedList`这个类导致容易望而却步，其实代码逻辑不难，如果实在写不出来，直接看答案
 
@@ -405,7 +416,7 @@ class MyLinkedList:
 # obj.deleteAtIndex(index)
 ```
 
-## 206. 反转链表
+## 206反转链表
 
 https://leetcode.cn/problems/reverse-linked-list/description/
 给你单链表的头节点 `head`，请你反转链表，并返回反转后的链表。
@@ -467,7 +478,7 @@ class Solution:
         return pre
 ```
 
-## 24. 两两交换链表中的节点
+## 24两两交换链表中的节点
 
 给定一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部值的情况下完成本题（即，只能进行节点交换）。
 **示例 1：**
@@ -536,7 +547,7 @@ class Solution:
         return dummy.next
 ```
 
-## 19. 删除链表的倒数第N个节点
+## 19删除链表的倒数第n个节点
 
 [19. 删除链表的倒数第N个节点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/description/)
 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
@@ -621,7 +632,7 @@ class Solution:
         return dummy.next
 ```
 
-## 160. 链表相交
+## 160链表相交
 
 给你两个单链表的头节点 `headA` 和 `headB`，请你找出并返回两个单链表**相交的起始节点**。如果两个链表不存在相交节点，返回 null。
 例如，下面的两个链表在节点 c1 开始相交：
@@ -691,7 +702,7 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
 }
 ```
 
-## 142. 环形链表II
+## 142环形链表2
 
 [142. 环形链表II](https://leetcode.cn/problems/linked-list-cycle-ii/description/)
 给定一个链表的头节点 `head`，返回链表开始入环的第一个节点。如果链表无环，则返回 `null`。

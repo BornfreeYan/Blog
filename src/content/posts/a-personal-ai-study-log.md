@@ -12,7 +12,7 @@ draft: false
 ## Agent
 主要有以下文档：
 
-- [ ] [Harness](https://bornfreeyan.github.io/Blog/article/1-harness/)，更新中，harness学习（261121-261122）。
+- [ ] [Harness工程](https://bornfreeyan.github.io/Blog/article/1-harness/)，更新中，261123-？
 
 ### Projects
 - [ ] [毕设](https://github.com/BornfreeYan/Morrow)，更新中，可能还是RAG为主，agentic stuff不多

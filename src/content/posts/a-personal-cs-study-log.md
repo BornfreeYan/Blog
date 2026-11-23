@@ -1,6 +1,6 @@
 ---
 title: CS学习记录
-date: 2026-11-18
+date: 2026-11-23
 tags:
   - 日志
 categories:
@@ -11,17 +11,17 @@ draft: false
 
 ## Backend Dev
 
-- [ ] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)，261121结束
+- [x] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)，261123结束
 - [ ] [FastAPI](https://bornfreeyan.github.io/Blog/article/2-fastapi/)，完善中
 - [ ] [Mysql](https://bornfreeyan.github.io/Blog/article/3-mysql/)，完善中
 - [ ] [Redis](https://bornfreeyan.github.io/Blog/article/4-redis/)，未开始
 - [ ] [RabbitMQ](https://bornfreeyan.github.io/Blog/article/5-rabbitmq/)，未开始
-- [ ] [Go](https://bornfreeyan.github.io/Blog/article/6-go/)，261120-261122
+- [ ] [Go](https://bornfreeyan.github.io/Blog/article/6-go/)，261123-261125
 - [ ] [Gin](https://bornfreeyan.github.io/Blog/article/7-gin/)，未开始
 
 ## Frontend Dev
 
-- [ ] [HTML](https://bornfreeyan.github.io/Blog/article/1-html/)，完善中
+- [x] [HTML](https://bornfreeyan.github.io/Blog/article/1-html/)，261123
 - [ ] [CSS](https://bornfreeyan.github.io/Blog/article/2-css/)，完善中
 - [ ] [Javascript](https://bornfreeyan.github.io/Blog/article/3-javascript/)，完善中
 
@@ -35,7 +35,8 @@ draft: false
 
 ## Leetcode
 
-- [x] [Leetcode数组](https://bornfreeyan.github.io/Blog/article/1-array/)，261122
+- [x] [Leetcode数组](https://bornfreeyan.github.io/Blog/article/1-array/)，261122-261123
+- [ ] [Leetcode链表](https://bornfreeyan.github.io/Blog/article/2-linklist.md/)，261123-261124
 
 ## Interview & Knowledge
 
@@ -49,3 +50,4 @@ draft: false
 - [x] [Webdesk](https://github.com/BornfreeYan/WebDesk) ，finished，顶多小修小改
 - [ ] [个人数字图像处理速成仓库](https://github.com/BornfreeYan/personal-DIP-crash-course)，261230期末考，暂时搁置
 - [ ] [个人简历](https://github.com/BornfreeYan/my-Resume)，完善中
+- [ ] [个人博客](https://bornfreeyan.github.io/Blog/)，即本站

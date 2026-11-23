@@ -1,6 +1,6 @@
 ---
 title: Leetcode数组合集
-date: 2026-11-21
+date: 2026-11-22
 tags:
   - Leetcode
 categories:
@@ -13,8 +13,11 @@ draft: false
 | 数组理论 | [数组理论基础](#数组理论基础) |
 | 二分查找 | [704 二分查找](#704二分查找) |
 | 双指针 | [27 移除元素](#27移除元素) |
+| 双指针/数学  | [189 轮转数组](#189轮转数组)  |
+| 数学 | [48 旋转图像](#48旋转图像) |
 | 双指针 | [977 有序数组的平方](#977有序数组的平方) |
 | 滑动窗口 | [209 长度最小的子数组](#209长度最小的子数组) |
+| 模拟 | [54 螺旋矩阵](#54螺旋矩阵) |
 | 模拟 | [59 螺旋矩阵2](#59螺旋矩阵2) |
 | 前缀和 | [58 区间和](#58区间和) |
 | 前缀和 | [44 开发商购买土地](#44开发商购买土地) |
@@ -176,6 +179,118 @@ class Solution:
 
 快指针负责探路，慢指针负责指向需要修改的地方；如果没有遇到目标值，快慢指针同时向前移动；如果遇到目标值，慢指针不动(等待快指针指向一个非目标值时被赋值)，快指针继续移动。
 
+## 189轮转数组
+[189. 轮转数组](https://leetcode.cn/problems/rotate-array/description/)
+
+给定一个整数数组 nums，将数组中的元素向右轮转 k 个位置，其中 k 是非负数。
+
+示例 1:
+
+输入: nums = [1,2,3,4,5,6,7], k = 3
+
+输出: [5,6,7,1,2,3,4]
+
+解释:
+向右轮转 1 步: [7,1,2,3,4,5,6]
+向右轮转 2 步: [6,7,1,2,3,4,5]
+向右轮转 3 步: [5,6,7,1,2,3,4]
+
+示例 2:
+
+输入：nums = [-1,-100,3,99], k = 2
+
+输出：[3,99,-1,-100]
+
+解释: 
+向右轮转 1 步: [99,-1,-100,3]
+向右轮转 2 步: [3,99,-1,-100]
+
+你可以使用空间复杂度为 O(1) 的 原地 算法解决这个问题吗？
+### 思路
+
+题目建议用O(1)空间复杂度，那就不能新建数组了，那就是O(n)了。
+
+可以考虑双指针：
+
+想象一个"大动作拆成三次小动作"的技巧：
+- 把整个数组完全颠倒——这一步本身就是用双指针做的（首尾对调，向中间靠拢）；
+- 再只对前 k 个元素做一次颠倒；
+- 再只对剩下的 n-k 个元素做一次颠倒。
+
+### 代码
+```python
+class Solution:
+    def subrotate(self,nums: list[int], left: int,right:int)-> list[int]:
+        while left<=right:
+            temp = nums[left]
+            nums[left] = nums[right]
+            nums[right] = temp
+            left+=1
+            right-=1
+        return nums
+
+    def rotate(self, nums: list[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        left = 0
+        right = len(nums)-1
+        k %= len(nums)
+        self.subrotate(nums,left,right)
+        self.subrotate(nums,0,k-1)
+        self.subrotate(nums,k,len(nums)-1)
+```
+
+## 48旋转图像
+[48. 旋转图像](https://leetcode.cn/problems/rotate-image/description/)
+
+给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
+
+你必须在 原地 旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要 使用另一个矩阵来旋转图像。
+
+示例 1：
+![](https://assets.leetcode.com/uploads/2020/08/28/mat1.jpg)
+
+输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+
+输出：[[7,4,1],[8,5,2],[9,6,3]]
+
+示例 2：
+![](https://assets.leetcode.com/uploads/2020/08/28/mat2.jpg)
+输入：matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+
+输出：[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+
+### 思路
+
+上一题你学会了"反转一段数组"。如果我把整个矩阵的每一行分别反转，或者把矩阵沿着主对角线翻转（第 i 行第 j 列和第 j 行第 i 列交换），矩阵会变成什么样？试试这两个操作，再组合一下？
+
+观察后发现，先沿着主对角线反转，再逐行反转，就得到结果。
+
+### 代码
+```python
+class Solution:
+    def rotate(self, matrix: list[list[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        # 主对角线反转
+        for i in range(0,len(matrix)):
+            for j in range(i,len(matrix)):
+                temp = matrix[i][j]
+                matrix[i][j] = matrix[j][i]
+                matrix[j][i]  = temp
+        # 逐行反转
+        for i in range(0,len(matrix)):
+            left = 0
+            right = len(matrix)-1
+            while left<=right:
+                temp = matrix[i][left]
+                matrix[i][left] = matrix[i][right] 
+                matrix[i][right] = temp
+                left+=1
+                right-=1
+```
 ## 977有序数组的平方
 [977. 有序数组的平方 - 力扣（LeetCode）](https://leetcode.cn/problems/squares-of-a-sorted-array/description/)
 
@@ -324,9 +439,59 @@ class Solution:
                 left += 1
         return result if result<=len(nums) else 0
 ```
+## 54螺旋矩阵
+[54. 螺旋矩阵](https://leetcode.cn/problems/spiral-matrix/description/)
+
+给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
+
+示例 1：
+![](https://assets.leetcode.com/uploads/2020/11/13/spiral1.jpg)
+输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+
+输出：[1,2,3,6,9,8,7,4,5]
+示例 2：
+![](https://assets.leetcode.com/uploads/2020/11/13/spiral.jpg)
+输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+
+输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+### 思路
+延边走，不断收缩边界即可。
+### 代码
+```python
+class Solution:
+    def spiralOrder(self, matrix: list[list[int]]) -> list[int]:
+        result = []
+        left, right = 0, len(matrix[0]) - 1   # 列边界
+        top, bottom = 0, len(matrix) - 1      # 行边界
+
+        while left <= right and top <= bottom:
+            # 1. 从左到右，走顶行
+            for i in range(left, right + 1):
+                result.append(matrix[top][i])
+            top += 1
+
+            # 2. 从上到下，走右列
+            for i in range(top, bottom + 1):
+                result.append(matrix[i][right])
+            right -= 1
+
+            # 3. 从右到左，走底行 —— 只有确实还有剩余的行才走
+            if top <= bottom:
+                for i in range(right, left - 1, -1):
+                    result.append(matrix[bottom][i])
+                bottom -= 1
+
+            # 4. 从下到上，走左列 —— 只有确实还有剩余的列才走
+            if left <= right:
+                for i in range(bottom, top - 1, -1):
+                    result.append(matrix[i][left])
+                left += 1
+
+        return result
+```
 
 ## 59螺旋矩阵2
-[59. 螺旋矩阵 II - 力扣（LeetCode）](https://leetcode.cn/problems/spiral-matrix-ii/description/)
+[59. 螺旋矩阵 II ](https://leetcode.cn/problems/spiral-matrix-ii/description/)
 
 给定一个正整数 n，生成一个包含 1 到 n^2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
 
