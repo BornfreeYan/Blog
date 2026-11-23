@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import { url } from '../../lib/url.js';
 import { isoDate } from '../../lib/date.js';
 import { countText } from '../../lib/text.js';
+import { postSummary } from '../../lib/posts.js';
+import { isAbsoluteUrl } from '../../lib/meta.js';
 import '../../styles/prose.css';
 
 export async function getStaticPaths() {
@@ -17,6 +19,22 @@ const { Content, headings } = await render(post);
 const stats = countText(post.body);
 const dateLabel = isoDate(post.data.date);
 
+// The card description should be the article's opening thought, not its
+// title repeated. `postSummary` prefers a frontmatter summary, then the first
+// blockquote (the hand-written standfirst these notes usually start with),
+// then the first paragraph.
+const description = post.data.summary || postSummary(post, 160) || post.data.title;
+
+// Covers live on an image bed, so absolute URLs are used as-is. The one local
+// image is the site-wide fallback that every post without a cover shares.
+const cover = post.data.cover?.trim() || null;
+const bannerSrc = cover
+  ? isAbsoluteUrl(cover)
+    ? cover
+    : url(cover)
+  : url('covers/default-cover.webp');
+const bannerAlt = cover ? post.data.coverAlt?.trim() || post.data.title : '';
+
 // keep the outline to h2/h3 and drop anything without a slug
 const toc = headings.filter((h) => (h.depth === 2 || h.depth === 3) && h.slug);
 
@@ -27,7 +45,26 @@ const meta = [
 ];
 ---
 
-<Base title={post.data.title} description={post.data.summary ?? post.data.title} wide>
+<Base
+  title={post.data.title}
+  description={description}
+  image={cover}
+  imageAlt={bannerAlt}
+  type="article"
+  publishedTime={post.data.date.toISOString()}
+  wide
+>
+  <figure class="post-banner">
+    <img
+      src={bannerSrc}
+      alt={bannerAlt}
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      referrerpolicy={cover ? 'no-referrer' : undefined}
+    />
+  </figure>
+
   <a class="back-link" href={url('article/')}>↩ Article</a>
 
   <div class="post-layout">
@@ -105,6 +142,25 @@ const meta = [
 </Base>
 
 <style>
+  /* Banner: spans the full .frame--wide column (cancelling its gutters) and
+     sits directly under the header, above the back link and title. */
+  .post-banner {
+    margin: 0 calc(var(--gutter) * -1) var(--sp-8);
+    background: var(--bg-elev);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .post-banner img {
+    width: 100%;
+    /* Short enough that the title stays near the first screen, tall enough
+       to read as a banner rather than a thumbnail. */
+    height: clamp(220px, 42vw, 400px);
+    object-fit: cover;
+    /* The plush sits low and right of centre; bias the crop toward it. */
+    object-position: 60% 55%;
+  }
+
   .back-link {
     display: inline-block;
     font-size: var(--fs-sm);

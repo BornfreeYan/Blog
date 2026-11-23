@@ -45,7 +45,7 @@ function clamp(text, limit = 110) {
  * Headings are skipped: on these notes the first thing after the frontmatter
  * is usually `## Intro`, which says nothing.
  */
-export function postSummary(entry) {
+export function postSummary(entry, limit = 110) {
   if (entry.data.summary) return clamp(entry.data.summary, 160);
 
   const body = String(entry.body || '').replace(/^---[\s\S]*?---/, '');
@@ -76,10 +76,14 @@ export function postSummary(entry) {
     const isHeading = /^#{1,6}\s/.test(line);
     const isList = /^([-*+]|\d+\.)\s/.test(line);
     const isRule = /^(-{3,}|\*{3,}|_{3,})$/.test(line);
+    // A table used as the article's index (common in the Leetcode notes) says
+    // nothing a reader would recognize as an intro; skip it entirely.
+    const isTable = line.startsWith('|');
 
-    // Only the first meaningful block counts. Headings and rules are skipped
-    // so a leading `## Intro` does not become the summary of the next thing.
-    if (isHeading || isRule) {
+    // Only the first meaningful block counts. Headings, rules and tables are
+    // skipped so a leading `## Intro` does not become the summary of the next
+    // thing.
+    if (isHeading || isRule || isTable) {
       if (block.length) return fromBlock(flush());
       continue;
     }
@@ -110,7 +114,7 @@ export function postSummary(entry) {
 
   function fromBlock({ kind, lines: blockLines }) {
     const text = toPlainText(blockLines.join(' '));
-    if (text) return clamp(text);
-    return kind === 'quote' ? '' : clamp(text);
+    if (text) return clamp(text, limit);
+    return kind === 'quote' ? '' : clamp(text, limit);
   }
 }
