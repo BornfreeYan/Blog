@@ -1,6 +1,6 @@
 ---
 title: CS学习记录
-date: 2026-11-23
+date: 2026-12-31
 tags:
   - 日志
 categories:
@@ -11,7 +11,7 @@ draft: false
 
 ## Backend Dev
 
-- [x] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)，261123结束
+- [ ] [Python](https://bornfreeyan.github.io/Blog/article/1-python/)，261125
 - [ ] [FastAPI](https://bornfreeyan.github.io/Blog/article/2-fastapi/)，完善中
 - [ ] [Mysql](https://bornfreeyan.github.io/Blog/article/3-mysql/)，完善中
 - [ ] [Redis](https://bornfreeyan.github.io/Blog/article/4-redis/)，未开始
@@ -21,13 +21,13 @@ draft: false
 
 ## Frontend Dev
 
-- [x] [HTML](https://bornfreeyan.github.io/Blog/article/1-html/)，261123
+- [ ] [HTML](https://bornfreeyan.github.io/Blog/article/1-html/)，261125
 - [ ] [CSS](https://bornfreeyan.github.io/Blog/article/2-css/)，完善中
 - [ ] [Javascript](https://bornfreeyan.github.io/Blog/article/3-javascript/)，完善中
 
 ## DevOps & Tools
 
-- [x] [Git/Github](https://bornfreeyan.github.io/Blog/article/git-version-control/)
+- [x] [Git/Github](https://bornfreeyan.github.io/Blog/article/git-version-control/)，261119
 - [ ] [Vibecode skill](https://bornfreeyan.github.io/Blog/article/vibecode/)，完善中
 - [ ] [Linux](https://bornfreeyan.github.io/Blog/article/linux/)，完善中
 - [ ] [Nginx](https://bornfreeyan.github.io/Blog/article/nginx/)，完善中
@@ -36,7 +36,7 @@ draft: false
 ## Leetcode
 
 - [x] [Leetcode数组](https://bornfreeyan.github.io/Blog/article/1-array/)，261122-261123
-- [ ] [Leetcode链表](https://bornfreeyan.github.io/Blog/article/2-linklist.md/)，261123-261124
+- [x] [Leetcode链表](https://bornfreeyan.github.io/Blog/article/2-linklist.md/)，261123-261124
 
 ## Interview & Knowledge
 
@@ -48,6 +48,6 @@ draft: false
 ## Projects
 
 - [x] [Webdesk](https://github.com/BornfreeYan/WebDesk) ，finished，顶多小修小改
-- [ ] [个人数字图像处理速成仓库](https://github.com/BornfreeYan/personal-DIP-crash-course)，261230期末考，暂时搁置
+- [ ] [个人数字图像处理速成仓库](https://github.com/BornfreeYan/personal-DIP-crash-course)，261230期末考，暂时搁置，12月8日启动
 - [ ] [个人简历](https://github.com/BornfreeYan/my-Resume)，完善中
-- [ ] [个人博客](https://bornfreeyan.github.io/Blog/)，即本站
+- [x] [个人博客](https://bornfreeyan.github.io/Blog/)，即本站

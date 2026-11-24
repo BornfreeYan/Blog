@@ -1,6 +1,6 @@
 ---
 title: Leetcode链表合集
-date: 2026-11-23
+date: 2026-11-24
 tags:
   - Leetcode
 categories:
@@ -17,7 +17,7 @@ draft: false
 | 虚拟头节点 | [24 两两交换链表中的节点](#24两两交换链表中的节点) |
 | 双指针 | [19 删除链表的倒数第n个节点](#19删除链表的倒数第n个节点) |
 | 双指针 | [160 链表相交](#160链表相交) |
-| 快慢指针 | [142 环形链表2](#142环形链表2) |
+| 快慢指针/数学 | [142 环形链表2](#142环形链表2) |
 
 ## 链表理论基础
 
@@ -47,8 +47,8 @@ C，结构体定义：
 ```c
 typedef struct ListNode {
     int val;
-    struct ListNodeT *next;
-} ListNode;//这是对应typedef取得别名，如果没写这个就需要struct ListNode *next，写了就可以ListNodeT *next
+    struct ListNode *next;
+} ListNode;//这是对应typedef取得别名，如果没写这个就需要struct ListNode *next，写了就可以ListNode *next
 ```
 Python，类定义：
 ```python
@@ -77,9 +77,13 @@ class ListNode:
 ## 203移除链表元素
 
 [203.移除链表元素](https://leetcode.cn/problems/remove-linked-list-elements/description/)
+
 题意：删除链表中等于给定值 val 的所有节点。
+
 示例 1： 输入：head = [1,2,6,3,4,5,6], val = 6 输出：[1,2,3,4,5]
+
 示例 2： 输入：head = [], val = 1 输出：[]
+
 示例 3： 输入：head = [7,7,7,7], val = 7 输出：[]
 ### 思路
 这里以链表 1 4 2 4 来举例，移除元素4。
@@ -87,13 +91,17 @@ class ListNode:
 如果使用C，C++编程语言的话，不要忘了还要从内存中删除这两个移除的节点,最终剩下1 2：
 ![](https://file1.kamacoder.com/i/algo/20210316095418280.png)
 这种情况下的移除操作，就是让节点next指针直接指向下下一个节点就可以了，
+
 那么因为单链表的特殊性，只能指向下一个节点，刚刚删除的是链表的中第二个，和第四个节点，那么如果删除的是头结点又该怎么办呢？
+
 这里就涉及如下链表操作的两种方式：
 - **直接使用原来的链表来进行删除操作。**
 - **设置一个虚拟头结点在进行删除操作。**
 
 第一种操作：直接使用原来的链表来进行移除。
+
 移除头结点和移除其他节点的操作是不一样的，因为链表的其他节点都是通过前一个节点来移除当前节点，而头结点没有前一个节点。
+
 所以头结点如何移除呢，其实只要**将头结点向后移动一位**就可以，这样就从链表中移除了一个头结点。
 ![](https://file1.kamacoder.com/i/algo/20210316095512470.png)
 依然别忘将原头结点从内存中删掉.
@@ -101,11 +109,15 @@ class ListNode:
 这样移除了一个头结点。在单链表中移除头结点 和 移除其他节点的操作方式是不一样，其实在写代码的时候也会发现，需要单独写一段逻辑来处理移除头结点的情况。
 
 第二种操作：
+
 其实**可以设置一个虚拟头结点**，这样原链表的所有节点就都可以按照统一的方式进行移除了。
 ![](https://file1.kamacoder.com/i/algo/20210316095619221.png)
 这里来给链表添加一个虚拟头结点为新的头结点，此时要移除这个旧头结点元素1。
+
 这样是不是就可以使用和移除链表其他节点的方式统一了呢？
+
 来看一下，如何移除元素1 呢，还是熟悉的方式，然后从内存中删除元素1。
+
 最后呢在题目中，return 头结点的时候，别忘了 `return dummyNode->next;`， **这才是新的头结点**
 ### Python实现
 使用虚拟头节点：
@@ -187,6 +199,7 @@ dummy 是变量（房子本身）    &dummy 是地址（门牌号）
 ```
 
 ## 707设计链表
+[707. 设计链表](https://leetcode.cn/problems/design-linked-list/description/)
 
 > 这道题其实就是头插法、尾插法、删除、增加节点等考研计算机都常见的操作，但是由于`MyLinkedList`这个类导致容易望而却步，其实代码逻辑不难，如果实在写不出来，直接看答案
 
@@ -417,23 +430,30 @@ class MyLinkedList:
 ```
 
 ## 206反转链表
+[206. 反转链表](https://leetcode.cn/problems/reverse-linked-list/description/)
 
-https://leetcode.cn/problems/reverse-linked-list/description/
 给你单链表的头节点 `head`，请你反转链表，并返回反转后的链表。
+
 **示例 1：**
+
 ![](https://assets.leetcode.com/uploads/2021/02/19/rev1ex1.jpg)
 - 输入：head = [1,2,3,4,5]
 - 输出：[5,4,3,2,1]
+
 **示例 2：**
 - 输入：head = [1,2]
 - 输出：[2,1]
+
 **示例 3：**
 - 输入：head = []
 - 输出：[]
+
 **进阶：** 链表可以选用迭代或递归方式完成反转。你能否用两种方法解决这道题？
 ### 思路
 如果再定义一个新的链表，实现链表元素的反转，其实这是对内存空间的浪费。
+
 其实只需要改变链表的next指针的指向，直接将链表反转 ，而不用重新定义一个新的链表。
+
 之前链表的头节点是元素1， 反转之后头结点就是元素5 ，这里并没有添加或者删除节点，仅仅是改变next指针的方向。
 ![](https://file1.kamacoder.com/i/algo/206.%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8.gif)
 首先定义一个cur指针，指向头结点，再定义一个pre指针，初始化为null。
@@ -479,25 +499,32 @@ class Solution:
 ```
 
 ## 24两两交换链表中的节点
+[24. 两两交换链表中的节点](https://leetcode.cn/problems/swap-nodes-in-pairs/description/)
 
 给定一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。你必须在不修改节点内部值的情况下完成本题（即，只能进行节点交换）。
+
 **示例 1：**
 ![](https://assets.leetcode.com/uploads/2020/10/03/swap_ex1.jpg)
 - 输入：head = [1,2,3,4]
 - 输出：[2,1,4,3]
+
 **示例 2：**
 - 输入：head = []
 - 输出：[]
+
 **示例 3：**
 - 输入：head = [1]
 - 输出：[1]
+
 **示例 4：**
 - 输入：head = [1,2,3]
 - 输出：[2,1,3]
 
 ### 思路
 首先建议，对链表有增删等改动的操作，都加一个虚拟头节点dummy。
+
 这道题正常的画图模拟过程即可：
+
 初始时，cur指向虚拟头结点，然后进行如下三步：
 ![](https://file1.kamacoder.com/i/algo/24.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B91.png)
 操作之后，链表如下：
@@ -550,22 +577,26 @@ class Solution:
 ## 19删除链表的倒数第n个节点
 
 [19. 删除链表的倒数第N个节点](https://leetcode.cn/problems/remove-nth-node-from-end-of-list/description/)
+
 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
 **示例 1：**
 - 输入：head = [1,2,3,4,5], n = 2
 - 输出：[1,2,3,5]
+
 **示例 2：**
 - 输入：head = [1], n = 1
 - 输出：[]
+
 **示例 3：**
 - 输入：head = [1,2], n = 1
 - 输出：[1]
+
 **进阶：** 你能尝试使用一趟扫描实现吗？
 
 ### 思路
 双指针的经典应用，如果要删除倒数第n个节点，让fast移动n步，然后让fast和slow同时移动，直到fast指向链表末尾。删掉slow所指向的节点就可以了。
-另外最好加一个虚拟头节点dummy方便处理。
 
+另外最好加一个虚拟头节点dummy方便处理。
 1. 定义fast指针和slow指针，初始值为虚拟头结点
 2. fast首先走n步
 3. 然后fast和slow同时移动，直到fast指向末尾
@@ -633,20 +664,29 @@ class Solution:
 ```
 
 ## 160链表相交
+[160. 链表相交](https://leetcode.cn/problems/intersection-of-two-linked-lists/description/)
 
 给你两个单链表的头节点 `headA` 和 `headB`，请你找出并返回两个单链表**相交的起始节点**。如果两个链表不存在相交节点，返回 null。
+
 例如，下面的两个链表在节点 c1 开始相交：
 ![](https://assets.leetcode.cn/aliyun-lc-upload/uploads/2018/12/14/160_statement.png)
 在评测系统中，**相交的定义是基于节点地址而非节点值**。如果两个链表在某个节点相交，则该节点在两个链表中必须是同一个节点（即**内存地址相同**）。
+
 **示例 1：**
+![](https://assets.leetcode.com/uploads/2021/03/05/160_example_1_1.png)
 - 输入：intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
 - 输出：Intersected at '8'
+
 **示例 2：**
+![](https://assets.leetcode.com/uploads/2021/03/05/160_example_2.png)
 - 输入：intersectVal = 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
 - 输出：Intersected at '2'
+
 **示例 3：**
+![](https://assets.leetcode.cn/aliyun-lc-upload/uploads/2018/12/14/160_example_3.png)
 - 输入：intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
 - 输出：null
+
 **进阶：** 你能设计一个时间复杂度为 O(n)、仅用 O(1) 内存的解决方案吗？
 
 ### 思路
@@ -702,9 +742,41 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
 }
 ```
 
+Python:
+
+Python 里根本不用"获取地址"，直接用 is（或 ==）比较两个变量即可，效果和你 C 里的 pA == pB 完全一样。Python 的变量本身就是对象的引用（相当于"自动解引用的指针"）。
+```python
+class Solution:
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+        curA, curB = headA, headB
+        lenA = lenB = 0
+        while curA:
+            lenA += 1
+            curA = curA.next
+        while curB:
+            lenB += 1
+            curB = curB.next
+
+        # 长链表先走 gap 步，对齐
+        if lenA > lenB:
+            for _ in range(lenA - lenB):
+                headA = headA.next
+        else:
+            for _ in range(lenB - lenA):
+                headB = headB.next
+
+        while headA and headB:
+            if headA is headB:
+                return headA
+            headA = headA.next
+            headB = headB.next
+        return None
+```
+
 ## 142环形链表2
 
 [142. 环形链表II](https://leetcode.cn/problems/linked-list-cycle-ii/description/)
+
 给定一个链表的头节点 `head`，返回链表开始入环的第一个节点。如果链表无环，则返回 `null`。
 
 如果链表中有某个节点，可以通过连续跟踪 `next` 指针再次到达，则链表中存在环。为了表示给定链表中的环，评测系统内部使用整数 `pos` 来表示链表尾连接到链表中的位置（索引从 0 开始）。如果 `pos` 是 -1，则在该链表中没有环。注意：`pos` 不作为参数进行传递，仅仅是为了标识链表的实际情况。
@@ -716,14 +788,17 @@ struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *he
 - 输入：head = [3,2,0,-4], pos = 1
 - 输出：返回索引为 1 的链表节点
 - 解释：链表中有一个环，其尾部连接到第二个节点。
+
 **示例 2：**
 - 输入：head = [1,2], pos = 0
 - 输出：返回索引为 0 的链表节点
 - 解释：链表中有一个环，其尾部连接到第一个节点。
+
 **示例 3：**
 - 输入：head = [1], pos = -1
 - 输出：返回 null
 - 解释：链表中没有环。
+
 **进阶：** 你能用 O(1)（即，常量）内存解决此问题吗？
 
 ### 思路
@@ -736,29 +811,41 @@ pos不是一个参数，只是告诉你在有环的情况下你应该返回哪�
 
 #### 判断链表是否环
 可以使用快慢指针法，分别定义 fast 和 slow 指针，从头结点出发，fast指针每次移动两个节点，slow指针每次移动一个节点，如果 fast 和 slow指针在途中相遇 ，说明这个链表有环。
+
 **fast指针一定先进入环中，如果fast指针和slow指针相遇的话，一定是在环中相遇，这是毋庸置疑的。** 可以自己任意画几个环试试，他们终将相遇。
 ![](https://file1.kamacoder.com/i/algo/141.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8.gif)
 #### 如何找到这个环的入口
 这就需要数学推导了。
+
 假设从头结点到环形入口节点 的节点数为x。 环形入口节点到 fast指针与slow指针相遇节点 节点数为y。 从相遇节点 再到环形入口节点节点数为 z。
 ![](https://file1.kamacoder.com/i/algo/20220925103433.png)
 那么相遇时： slow指针走过的节点数为: `x + y`， fast指针走过的节点数：`x + y + n (y + z)`，n为fast指针在环内走了n圈才遇到slow指针， （y+z）为 一圈内节点的个数A。
 
 因为fast指针是一步走两个节点，slow指针一步走一个节点， 所以 fast指针走过的节点数 = slow指针走过的节点数 * 2：
 `(x + y) * 2 = x + y + n (y + z)`
+
 两边消掉一个（x+y）: `x + y = n (y + z)`
+
 因为要找环形的入口，那么要求的是x，因为x表示 头结点到 环形入口节点的的距离。
+
 所以要求x ，将x单独放在左面：`x = n (y + z) - y` ,
 
 再从n(y+z)中提出一个 （y+z）来，整理公式之后为如下公式：`x = (n - 1) (y + z) + z` 注意这里n一定是大于等于1的，因为 fast指针至少要多走一圈才能相遇slow指针。
+
 这个公式说明什么呢？
+
 先拿n为1的情况来举例，意味着fast指针在环形里转了一圈之后，就遇到了 slow指针了。
+
 当 n为1的时候，公式就化解为 `x = z`，
+
 这就意味着，**从头结点出发一个指针，从相遇节点 也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是 环形入口的节点**。
+
 也就是在相遇节点处，定义一个指针index1，在头结点处定一个指针index2。
+
 让index1和index2同时移动，每次移动一个节点， 那么他们相遇的地方就是 环形入口的节点。
 
 n如果大于1是什么情况呢，就是fast指针在环形转n圈之后才遇到 slow指针。
+
 其实这种情况和n为1的时候 效果是一样的，一样可以通过这个方法找到 环形的入口节点，只不过，index1 指针在环里 多转了(n-1)圈，然后再遇到index2，相遇点依然是环形的入口节点。
 ### 题解
 C：
