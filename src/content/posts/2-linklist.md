@@ -5,6 +5,7 @@ tags:
   - Leetcode
 categories:
   - CS
+cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYr3hI3_9kh7_nmKb31GvXM2soNeHqPn4ANs7tVkCMSQ&s=10
 draft: false
 ---
 
@@ -19,6 +20,7 @@ draft: false
 | 双指针 | [160 链表相交](#160链表相交) |
 | 快慢指针/数学 | [142 环形链表2](#142环形链表2) |
 
+> 还有一些[hot100题目](https://leetcode.cn/studyplan/top-100-liked/)需要补充，补充完删除本行。
 ## 链表理论基础
 
 链表是一种通过指针串联在一起的线性结构，每一个节点由两部分组成，一个是数据域一个是指针域（存放指向下一个节点的指针），最后一个节点的指针域指向null（空指针的意思）。
