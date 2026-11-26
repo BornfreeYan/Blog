@@ -1,10 +1,12 @@
 ---
 title: HTML
-date: 2026-11-23
+date: 2026-11-25
 tags:
   - HTML
+  - Frontend
 categories:
   - CS
+cover: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX3OMoABRzxGTkga1JOGOi70WoFxJJrwbVEGVCv_4xyjpDlHpMGtBcmQM&s=10
 draft: false
 ---
 > 参考课程：[3小时前端三件套速成](https://www.bilibili.com/video/BV1BT4y1W7Aw/?share_source=copy_web&vd_source=f290db4430dc60ad19d813119d3e7628)+[html强化](https://youtu.be/CLUPkcLQm64?si=P1gElt8uUWe-wfoC)

@@ -1,11 +1,12 @@
 ---
 title: Python
-date: 2026-11-23
+date: 2026-11-25
 tags:
   - Python
   - Backend
 categories:
   - CS
+cover: https://miro.medium.com/v2/1*3IcLSFuT8PQg4cUBaRXH1A.png
 draft: false
 ---
 > 参考：看的是[莫烦python](https://mofanpy.com/tutorials/python-basic/interactive-python/)。
@@ -58,7 +59,7 @@ print("太阳从", name, "升起")
 | \*\*       | 幂                                                                                                                           | 3\*\* 2 =9                                                                                                   |
 | //         | 取整除                                                                                                                       | 10//3=3                                                                                                      |
 | and or not | 布尔运算（与或非）                                                                                                           | True and False 返回False                                                                                     |
-| ==\!=is    | 判断两个值是否相等、不等。注意$==$和$!=$比较引用指向的内存中的**内容**，而is判断两个变量是否指向一个**地址** | a = 1b = 1\.0c = 1a == b \# True，值相等a is b \# False，指向的不是一个对象a is c \# True，指向的都是整型值1 |
+| ==\!=is    | 判断两个值是否相等、不等。注意==和!=比较引用指向的内存中的**内容**，而is判断两个变量是否指向一个**地址** | a = 1b = 1\.0c = 1a == b \# True，值相等a is b \# False，指向的不是一个对象a is c \# True，指向的都是整型值1 |
 
 字符串也可以加：
 

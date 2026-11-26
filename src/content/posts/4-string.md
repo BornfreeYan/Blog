@@ -17,10 +17,13 @@ draft: false
 | 模拟 | [右旋转字符串](#右旋转字符串) |
 | KMP | [28 实现strstr](#28实现strstr) |
 
+> 难点还是KMP吧，之后再看看并删除本行。
 ## 344反转字符串
 
 [344.反转字符串](https://leetcode.cn/problems/reverse-string/)
+
 编写一个函数，其作用是**原地**反转输入字符串。
+
 **示例：**
 ```
 输入：s = ["h","e","l","l","o"]
@@ -70,9 +73,11 @@ class Solution:
 ## 541反转字符串2
 
 [541.反转字符串II](https://leetcode.cn/problems/reverse-string-ii/description/)
+
 给定一个字符串 `s` 和一个整数 `k`，每计数至 `2k` 个字符，就反转这 `2k` 字符中的前 `k` 个字符。
 - 若剩余字符少于 `k` 个，则反转剩余全部字符
 - 若剩余字符在 `k` 到 `2k` 之间，则反转前 `k` 个字符
+
 **示例：**
 ```
 输入：s = "abcdefg", k = 2
@@ -129,15 +134,19 @@ class Solution:
 ## 替换数字
 
 这是卡码网的一道题：[替换数字](https://kamacoder.com/problempage.php?pid=1064)。需要控制输入输出。
+
 给定一个字符串 s，它包含**小写字母和数字字符**，请编写一个函数，将字符串中的字母字符保持不变，而将每个数字字符替换为number。
 
 例如，对于输入字符串 "a1b2c3"，函数应该将其转换为 "anumberbnumbercnumber"。
 对于输入字符串 "a5b"，函数应该将其转换为 "anumberb"
 
+
 输入：一个字符串 s,s 仅包含小写字母和数字字符。
+
 输出：打印一个新的字符串，其中每个数字字符都被替换为了number
 
 样例输入：a1b2c3
+
 样例输出：anumberbnumbercnumber
 
 数据范围：  1 <= s.length < 10000
@@ -215,7 +224,7 @@ def replace_digits(s: str) -> str:
             res.append(ch)
     return ''.join(res)
   
-# ============= 关键在这下面（ACM模式的输入输出） =============
+# ============= ACM模式的输入输出 =============
 if __name__ == "__main__":
     s = input()          # 从控制台读取一行字符串（比如 "a1b2c3"）
     result = replace_digits(s)
@@ -225,20 +234,29 @@ if __name__ == "__main__":
 ## 151翻转字符串里的单词
 
 [151.翻转字符串里的单词](https://leetcode.cn/problems/reverse-words-in-a-string/description/)
+
 给定一个字符串，逐个翻转字符串中的每个单词。
 
 示例 1：  
+
 输入: "the sky is blue"  
+
 输出: "blue is sky the"
 
 示例 2：  
+
 输入: "  hello world!  "  
+
 输出: "world! hello"  
+
 解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。
 
 示例 3：  
+
 输入: "a good     example"  
+
 输出: "example good a"  
+
 解释: 如果两个单词间有多余的空格，将反转后单词间的空格减少到只含一个。
 ### 思路
 想一下，我们将整个字符串都反转过来，那么单词的顺序指定是倒序了，只不过单词本身也倒序了，那么再把单词反转一下，单词不就正过来了。
@@ -302,9 +320,47 @@ char* reverseWords(char* s) {
 }
 ```
 
+```python
+class Solution:
+    def reverse(self, chars: list, i: int, j: int) -> None:
+        while i < j:
+            chars[i], chars[j] = chars[j], chars[i]   # 元组交换，无需 temp
+            i += 1
+            j -= 1
+
+    def clean(self, chars: list) -> int:
+        """原地删除多余空格，返回有效长度"""
+        slow = fast = 0
+        n = len(chars)
+        while fast < n:
+            if chars[fast] == ' ':
+                fast += 1
+                continue
+            if slow > 0:              # 不是第一个单词，先补一个分隔空格
+                chars[slow] = ' '
+                slow += 1
+            while fast < n and chars[fast] != ' ':   # 拷贝整个单词
+                chars[slow] = chars[fast]
+                slow += 1
+                fast += 1
+        return slow                   # slow 即有效长度
+
+    def reverseWords(self, s: str) -> str:
+        chars = list(s)
+        n = self.clean(chars)              # 原地清洗
+        self.reverse(chars, 0, n - 1)      # 整体反转
+        start = 0
+        for i in range(n + 1):             # 故意多走一格
+            if i == n or chars[i] == ' ':  # 空格或"虚拟结尾"都意味着单词结束
+                self.reverse(chars, start, i - 1)
+                start = i + 1
+        return ''.join(chars[:n])
+```
+
 ## 右旋转字符串
 
 [右旋转字符串](https://kamacoder.com/problempage.php?pid=1065)
+
 字符串的右旋转操作是把字符串尾部的若干个字符转移到字符串的前面。给定一个字符串 s 和一个正整数 k，请编写一个函数，将字符串中的后面 k 个字符移到字符串的前面，实现字符串的右旋转操作。
 
 例如，对于输入字符串 "abcdefg" 和整数 2，函数应该将其转换为 "fgabcde"。
@@ -365,10 +421,13 @@ int main(){
 ## 28实现strstr
 
 [实现 strStr()](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
+
 给你两个字符串 `haystack` 和 `needle`，返回 `needle` 在 `haystack` 中**首次出现的位置**，若不存在则返回 `-1`
+
 **说明：**
 - 当 `needle` 是空字符串时，返回 `0`
 - 题目要求不使用语言内置的 `find` / `indexOf` 等函数
+
 **示例：**
 ```
 输入：haystack = "sadbutsad", needle = "sad"
@@ -421,7 +480,9 @@ KMP 的关键是计算 **前缀表**，也叫 `next` 数组。
 但如果使用前缀表，就不会从头匹配，而是从上次已经匹配的内容开始匹配，找到了模式串中第三个字符b继续开始匹配。
 
 此时就要问了**前缀表是如何记录的呢？**
+
 首先要知道前缀表的任务是当前位置匹配失败，找到之前已经匹配上的位置，再重新匹配，此也意味着在某个字符失配时，前缀表会告诉你下一步匹配中，模式串应该跳到哪个位置。
+
 那么什么是前缀表：**记录下标i之前（包括i）的字符串中，有多大长度的相同前缀后缀**
 #### 最长相同前后缀/前缀表的计算
 对于上面的例子，有以下的最长相同前后缀表格：
@@ -442,12 +503,17 @@ KMP 的关键是计算 **前缀表**，也叫 `next` 数组。
 **下标5之前这部分的字符串（也就是字符串aabaa）的最长相等的前缀 和 后缀字符串是 子字符串aa ，因为找到了最长相等的前缀和后缀，匹配失败的位置是后缀子串的后面，那么我们找到与其相同的前缀的后面重新匹配就可以了。**
 #### KMP 匹配过程
 ![](https://file1.kamacoder.com/i/algo/KMP%E7%B2%BE%E8%AE%B22.gif)
+
 找到的不匹配的位置， 那么此时我们要看它的前一个字符的前缀表的数值是多少。
+
 为什么要前一个字符的前缀表的数值呢，因为要找前面字符串的最长相同的前缀和后缀。
+
 所以要看前一位的 前缀表的数值。
+
 前一个字符的前缀表的数值是2， 所以把下标移动到下标2的位置继续比配。
 #### 前缀表与next数组关系
 next数组就可以是前缀表本身，但是很多实现都是把前缀表统一减一（右移一位，初始位置为-1）、或者全体减1 之后作为next数组。这和KMP算法本身没啥关系，就是具体实现的方式不同。
+
 为了初学的方便理解就不再对前缀表过多操作，就用其本身作为next数组。
 ### KMP题解（以前缀表本身为next数组）
 #### 前缀表（next数组）计算逻辑详解
