@@ -34,3 +34,6 @@ draft: false
 哎直接分享xp吧：[你的KK](https://x.com/KKLOVQ/)、[gzgirlsdream](https://x.com/gzgirlsdream)、[jishi18hao](https://x.com/jishi18hao)、[绵绵子](https://x.com/mianbao131466)
 
 但我依旧需要向自己强调一下这是不太健康的多巴胺来源哈😔。
+
+## Update 4-261127
+[Neko狸花](https://x.com/77Neko8)

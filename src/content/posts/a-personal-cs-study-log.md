@@ -21,7 +21,7 @@ draft: false
 
 ## Frontend Dev
 
-- [x] [HTML](https://bornfreeyan.github.io/Blog/article/1-html/)，261125
+- [ ] [HTML](https://bornfreeyan.github.io/Blog/article/1-html/)，完善中
 - [ ] [CSS](https://bornfreeyan.github.io/Blog/article/2-css/)，完善中
 - [ ] [Javascript](https://bornfreeyan.github.io/Blog/article/3-javascript/)，完善中
 
@@ -39,8 +39,8 @@ draft: false
 - [x] [Leetcode链表](https://bornfreeyan.github.io/Blog/article/2-linklist.md/)，261123-261124
 - [x] [Leetcode哈希表](https://bornfreeyan.github.io/Blog/article/3-hash.md/)，261125
 - [x] [Leetcode字符串](https://bornfreeyan.github.io/Blog/article/4-string.md/)，261126
-- [ ] [Leetcode双指针](https://bornfreeyan.github.io/Blog/article/5-two-pointers.md/)，261127
-- [ ] [Leetcode栈与队列](https://bornfreeyan.github.io/Blog/article/6-stack-and-queue.md/)，261128
+- [ ] [Leetcode双指针](https://bornfreeyan.github.io/Blog/article/5-two-pointers.md/)，261130
+- [ ] [Leetcode栈与队列](https://bornfreeyan.github.io/Blog/article/6-stack-and-queue.md/)，261131
 
 ## Interview & Knowledge
 
@@ -52,6 +52,6 @@ draft: false
 ## Projects
 
 - [x] [Webdesk](https://github.com/BornfreeYan/WebDesk) ，finished，顶多小修小改
-- [ ] [个人数字图像处理速成仓库](https://github.com/BornfreeYan/personal-DIP-crash-course)，261230期末考，暂时搁置，12月8日启动
+- [ ] [个人数字图像处理速成仓库](https://github.com/BornfreeYan/personal-DIP-crash-course)，261230期末考，暂时搁置，12月8日启动。当然也可能取消，因为这课好难，可能没有系统学习的动力。
 - [x] [个人简历](https://github.com/BornfreeYan/my-Resume)，大致完成，后期就是UI稍微美化以及添加项目。欢迎fork。
 - [x] [个人博客](https://bornfreeyan.github.io/Blog/)，即本站
